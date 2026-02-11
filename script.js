@@ -1402,7 +1402,7 @@ document.addEventListener("DOMContentLoaded", () => {
             coin.style.cssText = `
               position: absolute;
               left: ${40 + Math.random() * 20}%;
-              top: 50%;
+              top: 74%;
               font-size: ${18 + Math.random() * 14}px;
               pointer-events: none;
               z-index: 999;
