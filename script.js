@@ -174,7 +174,8 @@ class FloatingHeartsSystem {
     this.canvas = canvas;
     this.ctx = canvas.getContext("2d");
     this.hearts = [];
-    this.maxHearts = 35;
+    this.baseMaxHearts = 30;
+    this.maxHearts = this.baseMaxHearts;
     this.resize();
     window.addEventListener("resize", () => this.resize());
   }
@@ -185,7 +186,7 @@ class FloatingHeartsSystem {
   }
 
   createHeart() {
-    const heartChars = ["❤", "💕", "💖", "💗", "♥", "💘", "🩷"];
+    const heartChars = ["💟", "💕", "💖", "💗", "💞", "💘", "💝"];
     return {
       x: Math.random() * this.canvas.width,
       y: this.canvas.height + 30,
@@ -218,6 +219,11 @@ class FloatingHeartsSystem {
         this.hearts[i] = this.createHeart();
       }
     });
+  }
+
+  setBeatEnergy(level) {
+    const clamped = Math.max(0, Math.min(1, level || 0));
+    this.maxHearts = this.baseMaxHearts + Math.round(clamped * 30);
   }
 
   draw() {
@@ -1595,7 +1601,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (tetSection) {
           for (let i = 0; i < 8; i++) {
             const coin = document.createElement("div");
-            const emojis = ["🧧", "💰", "🪙", "✨", "🎊"];
+            const emojis = ["🧧", "💰", "🧨", "✨", "🎊"];
             coin.textContent =
               emojis[Math.floor(Math.random() * emojis.length)];
             coin.style.cssText = `
@@ -1827,6 +1833,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const hintDismiss = document.getElementById("hintDismiss");
   const interactionHints = document.getElementById("interactionHints");
   const hintToggle = document.getElementById("hintToggle");
+  const autoTourToggle = document.getElementById("autoTourToggle");
 
   if (hintDismiss && interactionHints) {
     hintDismiss.addEventListener("click", () => {
@@ -1844,12 +1851,78 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // ===== AUTO TOUR (SLIDE SHOW) =====
+  let autoTourActive = false;
+  let autoTourTimer = null;
+  const AUTO_TOUR_DELAY = 9000;
+
+  function stopAutoTour() {
+    autoTourActive = false;
+    if (autoTourToggle) autoTourToggle.classList.remove("active");
+    if (autoTourTimer) {
+      clearTimeout(autoTourTimer);
+      autoTourTimer = null;
+    }
+  }
+
+  function scheduleNextAutoTourStep() {
+    if (!autoTourActive) return;
+    if (autoTourTimer) clearTimeout(autoTourTimer);
+    autoTourTimer = setTimeout(() => {
+      if (!autoTourActive) return;
+      const idx = getCurrentSectionIndex();
+      if (idx >= SECTION_IDS.length - 1) {
+        stopAutoTour();
+        return;
+      }
+      goToSection("next");
+      scheduleNextAutoTourStep();
+    }, AUTO_TOUR_DELAY);
+  }
+
+  if (autoTourToggle) {
+    autoTourToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (autoTourActive) {
+        stopAutoTour();
+      } else {
+        autoTourActive = true;
+        autoTourToggle.classList.add("active");
+        scheduleNextAutoTourStep();
+      }
+    });
+  }
+
+  // Dừng auto tour khi người dùng tự tương tác
+  ["wheel", "touchstart"].forEach((evt) => {
+    window.addEventListener(evt, () => {
+      if (autoTourActive) stopAutoTour();
+    }, { passive: true });
+  });
+  document.addEventListener("keydown", (e) => {
+    if (["ArrowLeft", "ArrowRight", " ", "PageDown", "PageUp"].includes(e.key)) {
+      if (autoTourActive) stopAutoTour();
+    }
+  });
+
   // ===== VOICE CONTROL (Web Speech API) =====
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
   const voiceToggle = document.getElementById("voiceToggle");
+  const voiceStatus = document.getElementById("voiceStatus");
   let voiceEnabled = false;
   let recognition = null;
+
+  function showVoiceStatus(text) {
+    if (!voiceStatus) return;
+    voiceStatus.textContent = text;
+    voiceStatus.classList.add("visible");
+  }
+
+  function hideVoiceStatus() {
+    if (!voiceStatus) return;
+    voiceStatus.classList.remove("visible");
+  }
 
   if (SpeechRecognition) {
     recognition = new SpeechRecognition();
@@ -1861,7 +1934,10 @@ document.addEventListener("DOMContentLoaded", () => {
       const last = e.results.length - 1;
       const text = (e.results[last][0].transcript || "").toLowerCase();
       if (!e.results[last].isFinal) return;
+      const raw = (e.results[last][0].transcript || "").trim();
+      let handled = false;
       if (/mở nhạc|bật nhạc|play/.test(text)) {
+        handled = true;
         if (!musicPlaying) {
           bgMusic.volume = 0.3;
           bgMusic.play().catch(() => {});
@@ -1869,12 +1945,14 @@ document.addEventListener("DOMContentLoaded", () => {
           musicToggle.classList.add("playing");
         }
       } else if (/tắt nhạc|dừng nhạc|pause/.test(text)) {
+        handled = true;
         if (musicPlaying) {
           bgMusic.pause();
           musicToggle.classList.remove("playing");
           musicPlaying = false;
         }
       } else if (/chụp|chụp ảnh/.test(text)) {
+        handled = true;
         const cap = document.getElementById("captureBtn");
         if (cap && !cap.disabled) cap.click();
       } else if (
@@ -1882,13 +1960,30 @@ document.addEventListener("DOMContentLoaded", () => {
         fireworkBtn &&
         !fireworkCooldown
       ) {
+        handled = true;
         fireworkBtn.click();
       } else if (/thổi nến|thổi/.test(text) && blowBtn && !candlesBlown) {
+        handled = true;
         blowBtn.click();
       } else if (/next|xuống|tiếp/.test(text)) {
+        handled = true;
         goToSection("next");
       } else if (/lên|quay lại|back/.test(text)) {
+        handled = true;
         goToSection("prev");
+      }
+      if (raw && voiceEnabled) {
+        if (handled) {
+          showVoiceStatus(`✔ Nghe được: \"${raw}\"`);
+        } else {
+          showVoiceStatus(
+            `🤔 Nghe được: \"${raw}\" nhưng anh chưa dạy em lệnh này`,
+          );
+        }
+        setTimeout(() => {
+          if (voiceEnabled) showVoiceStatus("🎙️ Đang nghe... hãy nói gì đó nhé");
+          else hideVoiceStatus();
+        }, 2000);
       }
     };
 
@@ -1896,7 +1991,10 @@ document.addEventListener("DOMContentLoaded", () => {
       if (voiceEnabled) {
         try {
           recognition.start();
+          showVoiceStatus("🎙️ Đang nghe... hãy nói gì đó nhé");
         } catch (_) {}
+      } else {
+        hideVoiceStatus();
       }
     };
 
@@ -1908,6 +2006,7 @@ document.addEventListener("DOMContentLoaded", () => {
             recognition.start();
             voiceEnabled = true;
             voiceToggle.classList.add("active");
+            showVoiceStatus("🎙️ Đang nghe... hãy nói gì đó nhé");
           } catch (_) {}
         } else {
           voiceEnabled = false;
@@ -1915,6 +2014,7 @@ document.addEventListener("DOMContentLoaded", () => {
           try {
             recognition.stop();
           } catch (_) {}
+          hideVoiceStatus();
         }
       });
     }
@@ -1965,17 +2065,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const intensity = Math.min(1, avg / 128);
     if (musicToggleBtn)
       musicToggleBtn.style.setProperty("--viz-intensity", String(intensity));
+    if (heartsSystem && typeof heartsSystem.setBeatEnergy === "function") {
+      heartsSystem.setBeatEnergy(intensity);
+    }
     requestAnimationFrame(updateVisualizer);
   }
-  if (musicToggleBtn) {
-    musicToggleBtn.style.setProperty("--viz-intensity", "0");
-    musicToggleBtn.addEventListener("click", () => {
-      setTimeout(() => {
-        if (musicPlaying) initVisualizer();
-        updateVisualizer();
-      }, 100);
-    });
-  }
+    if (musicToggleBtn) {
+      musicToggleBtn.style.setProperty("--viz-intensity", "0");
+      musicToggleBtn.addEventListener("click", () => {
+        setTimeout(() => {
+          if (musicPlaying) initVisualizer();
+          updateVisualizer();
+        }, 100);
+      });
+    }
   if (
     typeof document.documentElement.style.setProperty(
       "--viz-intensity",

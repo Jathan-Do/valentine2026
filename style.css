@@ -161,6 +161,32 @@ body {
   position: absolute;
 }
 
+.voice-status {
+  position: fixed;
+  top: 140px;
+  right: 20px;
+  max-width: 220px;
+  padding: 8px 12px;
+  backdrop-filter: blur(10px);
+  border-radius: 14px;
+  background: rgba(232, 69, 107, 0.2);
+  border: 1px solid rgba(0, 255, 170, 0.5);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.8rem;
+  line-height: 1.4;
+  box-shadow: 0 0 20px rgba(0, 255, 170, 0.7);
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  z-index: 1000;
+}
+
+.voice-status.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .music-wave {
   display: flex;
   align-items: flex-end;
@@ -2451,6 +2477,7 @@ body {
   border: 1px solid rgba(255, 107, 138, 0.35);
   border-radius: 24px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
   z-index: 9990;
   font-size: 0.7rem;
   color: rgba(255, 255, 255, 0.85);
@@ -2529,4 +2556,36 @@ body {
   transform: translateY(-1px);
   background: rgba(232, 69, 107, 0.4);
   border: 2px solid rgba(255, 107, 138, 0.3);
+}
+
+.auto-tour-btn {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 20px;
+  z-index: 9991;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  background: rgba(12, 6, 18, 0.9);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.auto-tour-btn:hover {
+  box-shadow: 0 0 16px rgba(232, 69, 107, 0.5);
+  transform: translateY(-1px);
+  background: rgba(232, 69, 107, 0.4);
+  border: 2px solid rgba(255, 107, 138, 0.3);
+}
+
+.auto-tour-btn.active {
+  background: rgba(232, 69, 107, 0.9);
+  border-color: rgba(255, 255, 255, 0.7);
 }
