@@ -599,6 +599,13 @@
       <!-- Result: Photo Strip Preview -->
       <div class="pb-result" id="pbResult">
         <h3 class="pb-result-title">🖼️ Dãy ảnh của mình!</h3>
+        <div class="pb-sticker-bar" id="pbStickerBar">
+          <span class="pb-sticker-btn" data-sticker="💋" title="Thêm sticker">💋</span>
+          <span class="pb-sticker-btn" data-sticker="🎀" title="Thêm sticker">🎀</span>
+          <span class="pb-sticker-btn" data-sticker="🌹" title="Thêm sticker">🌹</span>
+          <span class="pb-sticker-btn" data-sticker="✨" title="Thêm sticker">✨</span>
+          <span class="pb-sticker-btn" data-sticker="💕" title="Thêm sticker">💕</span>
+        </div>
         <div class="pb-strip-preview-area" id="stripPreviewArea">
           <!-- Generated strip canvas will appear here -->
         </div>
@@ -681,7 +688,17 @@
 
   <!-- Interaction hints (gesture, keyboard, shake) -->
   <div class="interaction-hints" id="interactionHints" role="status" aria-live="polite">
-    <span class="hint-text">✨ M = nhạc</span>
+    <span class="hint-text">
+      <span style="font-size:1.1em;">✨ <strong>Tips sử dụng:</strong></span>
+      <br>
+      <span>• <kbd>M</kbd> – Mở/Tắt Nhạc</span>
+      <br>
+      <span>• <kbd>←</kbd> <kbd>→</kbd> hoặc <kbd>↑</kbd> <kbd>↓</kbd> hoặc <kbd>Space</kbd> – Chuyển nhanh giữa các phần</span>
+      <br>
+      <span>• <strong>Gõ</strong> <kbd>Milk</kbd>/<kbd>Boo</kbd> – Hiện "status" siêu dễ thương</span>
+      <br>
+      <span>• <strong>Chạm vào màn hình</strong> – Bật điều khiển giọng nói (ví dụ: <em>“chụp ảnh|chụp”, “pháo hoa|bắn pháo”, “thổi nến|thổi”, “mở nhạc|bật nhạc|play”,</br> “tắt nhạc|dừng nhạc|pause”, “next|xuống|tiếp”, “lên|quay lại|back”</em>)</span>
+    </span>
     <button type="button" class="hint-dismiss" id="hintDismiss" aria-label="Đóng gợi ý">×</button>
   </div>
 

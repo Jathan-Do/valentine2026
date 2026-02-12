@@ -506,6 +506,7 @@ class PhotoBooth {
     this.currentStripFrame = "pink";
     this.capturedPhotos = [];
     this.stripCanvas = null;
+    this.stickerList = [];
 
     // Gesture capture state
     this.gestureEnabled = false;
@@ -696,7 +697,9 @@ class PhotoBooth {
   onHandResults(results) {
     if (!this.gestureEnabled || !this.isActive) return;
     const lm =
-      results && results.multiHandLandmarks ? results.multiHandLandmarks[0] : null;
+      results && results.multiHandLandmarks
+        ? results.multiHandLandmarks[0]
+        : null;
 
     const palm = lm ? this.isOpenPalm(lm) : false;
     const now = Date.now();
@@ -1109,15 +1112,33 @@ class PhotoBooth {
 
   downloadStrip() {
     if (!this.stripCanvas) return;
+    let canvas = this.stripCanvas;
+    const stickers = this.stickerList || [];
+    if (stickers.length > 0) {
+      const out = document.createElement("canvas");
+      out.width = canvas.width;
+      out.height = canvas.height;
+      const ctx = out.getContext("2d");
+      ctx.drawImage(canvas, 0, 0);
+      const size = Math.min(canvas.width, canvas.height) * 0.08;
+      ctx.font = `${size}px serif`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      stickers.forEach(({ emoji, x, y }) => {
+        ctx.fillText(emoji, x * canvas.width, y * canvas.height);
+      });
+      canvas = out;
+    }
     const link = document.createElement("a");
     link.download = `photobooth_${Date.now()}.png`;
-    link.href = this.stripCanvas.toDataURL("image/png");
+    link.href = canvas.toDataURL("image/png");
     link.click();
   }
 
   retake() {
     this.capturedPhotos = [];
     this.stripCanvas = null;
+    this.stickerList = [];
     this.pbResult.classList.remove("active");
     this.stripPreviewArea.innerHTML = "";
   }
@@ -1723,7 +1744,37 @@ document.addEventListener("DOMContentLoaded", () => {
     .querySelectorAll(".section")
     .forEach((section) => observer.observe(section));
 
-  // ===== NAV DOTS =====
+  // ===== NAV DOTS + SECTION ORDER (for keyboard/gesture) =====
+  const SECTION_IDS = [
+    "intro",
+    "valentine",
+    "loveLetter",
+    "giaoThua",
+    "birthday",
+    "timeline",
+    "photoBooth",
+    "wishes",
+    "finale",
+  ];
+  function getCurrentSectionIndex() {
+    const refY = window.innerHeight * 0.15;
+    for (let i = sections.length - 1; i >= 0; i--) {
+      const rect = sections[i].getBoundingClientRect();
+      if (rect.top <= refY && rect.bottom > refY) return i;
+    }
+    if (sections[0].getBoundingClientRect().top > refY) return 0;
+    return sections.length - 1;
+  }
+  function goToSection(direction) {
+    const idx = getCurrentSectionIndex();
+    const next =
+      direction === "next"
+        ? Math.min(idx + 1, SECTION_IDS.length - 1)
+        : Math.max(idx - 1, 0);
+    const el = document.getElementById(SECTION_IDS[next]);
+    if (el) el.scrollIntoView({ behavior: "smooth" });
+  }
+
   const navDots = document.querySelectorAll(".nav-dot");
   const sections = document.querySelectorAll(".section");
 
@@ -1732,35 +1783,37 @@ document.addEventListener("DOMContentLoaded", () => {
       e.stopPropagation();
       const targetId = dot.getAttribute("data-section");
       const target = document.getElementById(targetId);
-      if (target) target.scrollIntoView({ behavior: "smooth" });
+      if (target) {
+        // Set active immediately when clicking
+        navDots.forEach((d) => d.classList.remove("active"));
+        dot.classList.add("active");
+        target.scrollIntoView({ behavior: "smooth" });
+      }
     });
   });
 
   const sectionObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const id = entry.target.id;
-          navDots.forEach((dot) => {
-            dot.classList.toggle(
-              "active",
-              dot.getAttribute("data-section") === id,
-            );
-          });
-        }
+    () => {
+      const idx = getCurrentSectionIndex();
+      const activeId = SECTION_IDS[idx];
+      navDots.forEach((dot) => {
+        dot.classList.toggle(
+          "active",
+          dot.getAttribute("data-section") === activeId,
+        );
       });
     },
-    { threshold: 0.5 },
+    { threshold: [0, 0.01, 0.05, 0.1, 0.2], rootMargin: "0px 0px 0px 0px" },
   );
 
   sections.forEach((section) => sectionObserver.observe(section));
-  
+
   // --- Keyboard ---
   document.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight" || e.key === " ") {
+    if (e.key === "ArrowDown" || e.key === "ArrowRight" || e.key === " ") {
       e.preventDefault();
       goToSection("next");
-    } else if (e.key === "ArrowLeft") {
+    } else if (e.key === "ArrowUp" || e.key === "ArrowLeft") {
       e.preventDefault();
       goToSection("prev");
     } else if (e.key === "m" || e.key === "M") {
@@ -1779,6 +1832,160 @@ document.addEventListener("DOMContentLoaded", () => {
       interactionHints.style.display = "none";
     });
   }
+
+  // ===== VOICE CONTROL (Web Speech API) =====
+  const SpeechRecognition =
+    window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (SpeechRecognition) {
+    const recognition = new SpeechRecognition();
+    recognition.continuous = true;
+    recognition.interimResults = false;
+    recognition.lang = "vi-VN";
+    recognition.onresult = (e) => {
+      const last = e.results.length - 1;
+      const text = (e.results[last][0].transcript || "").toLowerCase();
+      if (!e.results[last].isFinal) return;
+      if (/mở nhạc|bật nhạc|play/.test(text)) {
+        if (!musicPlaying) {
+          bgMusic.volume = 0.3;
+          bgMusic.play().catch(() => {});
+          musicPlaying = true;
+          musicToggle.classList.add("playing");
+        }
+      } else if (/tắt nhạc|dừng nhạc|pause/.test(text)) {
+        if (musicPlaying) {
+          bgMusic.pause();
+          musicToggle.classList.remove("playing");
+          musicPlaying = false;
+        }
+      } else if (/chụp|chụp ảnh/.test(text)) {
+        const cap = document.getElementById("captureBtn");
+        if (cap && !cap.disabled) cap.click();
+      } else if (
+        /pháo hoa|bắn pháo/.test(text) &&
+        fireworkBtn &&
+        !fireworkCooldown
+      ) {
+        fireworkBtn.click();
+      } else if (/thổi nến|thổi/.test(text) && blowBtn && !candlesBlown) {
+        blowBtn.click();
+      } else if (/next|xuống|tiếp/.test(text)) {
+        // Voice command for next section ("lên", "tiếp", "next", "xuống")
+        goToSection("next");
+      } else if (/lên|quay lại|back/.test(text)) {
+        // Voice command for previous section ("xuống", "trước", "lùi", ...)
+        goToSection("prev");
+      }
+    };
+    document.addEventListener(
+      "click",
+      () => {
+        if (typeof recognition.start === "function")
+          try {
+            recognition.start();
+          } catch (_) {}
+      },
+      { once: true },
+    );
+  }
+
+  // ===== EASTER EGG: MILK / BOO =====
+  let keyBuffer = "";
+  document.addEventListener("keydown", (e) => {
+    keyBuffer = (keyBuffer + (e.key || "")).slice(-6).toUpperCase();
+    if (keyBuffer.endsWith("MILK") || keyBuffer.endsWith("BOO")) {
+      keyBuffer = "";
+      confettiSystem.burst(document.body);
+      const toast = document.createElement("div");
+      toast.className = "easter-toast";
+      toast.textContent = "💕 Mãi yêu Milk / Boo! 💕";
+      toast.style.cssText =
+        "position:fixed;bottom:100px;left:50%;transform:translateX(-50%);padding:14px 24px;background:rgba(232,69,107,0.95);color:#fff;border-radius:12px;font-weight:700;z-index:99999;animation:fadeIn 0.3s ease;";
+      document.body.appendChild(toast);
+      setTimeout(() => toast.remove(), 2500);
+    }
+  });
+
+  // ===== MUSIC VISUALIZER =====
+  const musicToggleBtn = document.getElementById("musicToggle");
+  let audioCtx = null;
+  let analyser = null;
+  function initVisualizer() {
+    if (!bgMusic || audioCtx) return;
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const src = audioCtx.createMediaElementSource(bgMusic);
+    analyser = audioCtx.createAnalyser();
+    analyser.fftSize = 256;
+    src.connect(analyser);
+    analyser.connect(audioCtx.destination);
+  }
+  function updateVisualizer() {
+    if (!analyser || !musicPlaying) {
+      if (musicToggleBtn)
+        musicToggleBtn.style.setProperty("--viz-intensity", "0");
+      requestAnimationFrame(updateVisualizer);
+      return;
+    }
+    const data = new Uint8Array(analyser.frequencyBinCount);
+    analyser.getByteFrequencyData(data);
+    const avg = data.reduce((a, b) => a + b, 0) / data.length;
+    const intensity = Math.min(1, avg / 128);
+    if (musicToggleBtn)
+      musicToggleBtn.style.setProperty("--viz-intensity", String(intensity));
+    requestAnimationFrame(updateVisualizer);
+  }
+  if (musicToggleBtn) {
+    musicToggleBtn.style.setProperty("--viz-intensity", "0");
+    musicToggleBtn.addEventListener("click", () => {
+      setTimeout(() => {
+        if (musicPlaying) initVisualizer();
+        updateVisualizer();
+      }, 100);
+    });
+  }
+  if (
+    typeof document.documentElement.style.setProperty(
+      "--viz-intensity",
+      "0",
+    ) !== "undefined"
+  ) {
+  }
+  const vizStyle = document.createElement("style");
+  vizStyle.textContent =
+    ".music-btn .music-wave span { transform: scaleY(calc(0.3 + var(--viz-intensity, 0) * 0.7)); }";
+  document.head.appendChild(vizStyle);
+
+  // ===== PHOTO BOOTH STICKERS =====
+  let selectedSticker = null;
+  document.querySelectorAll(".pb-sticker-btn").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      selectedSticker = btn.getAttribute("data-sticker");
+    });
+  });
+  document
+    .getElementById("stripPreviewArea")
+    ?.addEventListener("click", (e) => {
+      const area = e.target.closest(".pb-strip-preview-area");
+      const canvas = area?.querySelector("canvas");
+      if (!canvas || !selectedSticker) return;
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width / rect.width;
+      const scaleY = canvas.height / rect.height;
+      const x = (e.clientX - rect.left) * scaleX;
+      const y = (e.clientY - rect.top) * scaleY;
+      if (!photoBooth.stickerList) photoBooth.stickerList = [];
+      photoBooth.stickerList.push({
+        emoji: selectedSticker,
+        x: x / canvas.width,
+        y: y / canvas.height,
+      });
+      const areaRect = area.getBoundingClientRect();
+      const span = document.createElement("span");
+      span.style.cssText = `position:absolute;left:${e.clientX - areaRect.left - 12}px;top:${e.clientY - areaRect.top - 12}px;font-size:24px;pointer-events:none;`;
+      span.textContent = selectedSticker;
+      area.appendChild(span);
+    });
 
   // ===== PARALLAX ON MOUSE MOVE =====
   document.addEventListener("mousemove", (e) => {
