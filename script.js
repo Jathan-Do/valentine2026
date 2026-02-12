@@ -1823,24 +1823,40 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
-  //Close noti hint
+  //Close / reopen tips hint
   const hintDismiss = document.getElementById("hintDismiss");
   const interactionHints = document.getElementById("interactionHints");
+  const hintToggle = document.getElementById("hintToggle");
 
   if (hintDismiss && interactionHints) {
     hintDismiss.addEventListener("click", () => {
-      interactionHints.style.display = "none";
+      interactionHints.classList.add("dismissed");
+      if (hintToggle) hintToggle.classList.add("visible");
+    });
+  }
+
+  if (hintToggle && interactionHints) {
+    hintToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      interactionHints.classList.remove("dismissed");
+      interactionHints.style.display = "flex";
+      hintToggle.classList.remove("visible");
     });
   }
 
   // ===== VOICE CONTROL (Web Speech API) =====
   const SpeechRecognition =
     window.SpeechRecognition || window.webkitSpeechRecognition;
+  const voiceToggle = document.getElementById("voiceToggle");
+  let voiceEnabled = false;
+  let recognition = null;
+
   if (SpeechRecognition) {
-    const recognition = new SpeechRecognition();
+    recognition = new SpeechRecognition();
     recognition.continuous = true;
     recognition.interimResults = false;
     recognition.lang = "vi-VN";
+
     recognition.onresult = (e) => {
       const last = e.results.length - 1;
       const text = (e.results[last][0].transcript || "").toLowerCase();
@@ -1870,23 +1886,40 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (/thổi nến|thổi/.test(text) && blowBtn && !candlesBlown) {
         blowBtn.click();
       } else if (/next|xuống|tiếp/.test(text)) {
-        // Voice command for next section ("lên", "tiếp", "next", "xuống")
         goToSection("next");
       } else if (/lên|quay lại|back/.test(text)) {
-        // Voice command for previous section ("xuống", "trước", "lùi", ...)
         goToSection("prev");
       }
     };
-    document.addEventListener(
-      "click",
-      () => {
-        if (typeof recognition.start === "function")
+
+    recognition.onend = () => {
+      if (voiceEnabled) {
+        try {
+          recognition.start();
+        } catch (_) {}
+      }
+    };
+
+    if (voiceToggle) {
+      voiceToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (!voiceEnabled) {
           try {
             recognition.start();
+            voiceEnabled = true;
+            voiceToggle.classList.add("active");
           } catch (_) {}
-      },
-      { once: true },
-    );
+        } else {
+          voiceEnabled = false;
+          voiceToggle.classList.remove("active");
+          try {
+            recognition.stop();
+          } catch (_) {}
+        }
+      });
+    }
+  } else if (voiceToggle) {
+    voiceToggle.style.display = "none";
   }
 
   // ===== EASTER EGG: MILK / BOO =====

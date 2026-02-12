@@ -124,13 +124,38 @@ body {
   transition: var(--transition);
   overflow: hidden;
 }
-
+.voice-btn:hover,
 .music-btn:hover {
   background: rgba(232, 69, 107, 0.4);
   transform: scale(1.1);
   box-shadow: 0 0 20px rgba(232, 69, 107, 0.4);
 }
 
+.voice-btn {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 1000;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 107, 138, 0.3);
+  background: rgba(232, 69, 107, 0.2);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.voice-btn.active {
+  border-color: rgba(0, 255, 170, 0.8);
+  box-shadow: 0 0 20px rgba(0, 255, 170, 0.7);
+}
+
+.voice-icon,
 .music-icon {
   font-size: 1.3rem;
   position: absolute;
@@ -2473,4 +2498,35 @@ body {
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+.hint-toggle {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 20px;
+  z-index: 9991;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  background: rgba(12, 6, 18, 0.9);
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.hint-toggle.visible {
+  display: flex;
+}
+
+.hint-toggle:hover {
+  box-shadow: 0 0 16px rgba(232, 69, 107, 0.5);
+  transform: translateY(-1px);
+  background: rgba(232, 69, 107, 0.4);
+  border: 2px solid rgba(255, 107, 138, 0.3);
 }
