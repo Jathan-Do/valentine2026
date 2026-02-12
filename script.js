@@ -1013,11 +1013,30 @@ class PhotoBooth {
       ctx.fill();
       ctx.restore();
 
-      // Clip and draw photo
+      // Clip and draw photo (center-cropped to 4:3 so PC/mobile đồng nhất)
       ctx.save();
       this.roundRect(ctx, x, y, photoWidth, photoHeight, cornerRadius);
       ctx.clip();
-      ctx.drawImage(photos[i], x, y, photoWidth, photoHeight);
+      const src = photos[i];
+      const iw = src.width;
+      const ih = src.height;
+      const targetRatio = photoWidth / photoHeight; // 4:3
+      const sourceRatio = iw / ih;
+      let sx, sy, sw, sh;
+      if (sourceRatio > targetRatio) {
+        // Nguồn rộng hơn: crop 2 bên
+        sh = ih;
+        sw = ih * targetRatio;
+        sx = (iw - sw) / 2;
+        sy = 0;
+      } else {
+        // Nguồn cao hơn (thường là mobile dọc): crop trên/dưới
+        sw = iw;
+        sh = iw / targetRatio;
+        sx = 0;
+        sy = (ih - sh) / 2;
+      }
+      ctx.drawImage(src, sx, sy, sw, sh, x, y, photoWidth, photoHeight);
       ctx.restore();
     }
 
