@@ -15,7 +15,6 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
-
 </head>
 
 <body>
@@ -542,6 +541,17 @@
             </button>
           </div>
         </div>
+        <div class="pb-setting-group">
+          <label class="pb-label">Chụp bằng cử chỉ tay</label>
+          <label class="pb-switch">
+            <input type="checkbox" id="gestureCaptureToggle" />
+            <span class="pb-switch-ui" aria-hidden="true"></span>
+            <span class="pb-switch-text">Bật</span>
+          </label>
+          <div class="pb-gesture-status" id="gestureStatus" aria-live="polite">
+            Tắt
+          </div>
+        </div>
       </div>
 
       <!-- Camera View -->
@@ -690,6 +700,8 @@
   <!-- Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script src="script.js"></script>
+  <!-- MediaPipe Hands (gesture capture for PhotoBooth) -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
     AOS.init();

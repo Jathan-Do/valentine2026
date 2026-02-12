@@ -1,4 +1,4 @@
-﻿/* =====================================================
+/* =====================================================
    VALENTINE + TẾT + BIRTHDAY - JAVASCRIPT
    Three.js 3D Heart, Photo Booth, Interactive Effects
    ===================================================== */
@@ -492,6 +492,8 @@ class PhotoBooth {
     this.retakeBtn = document.getElementById("retakeBtn");
     this.pbSettings = document.getElementById("pbSettings");
     this.stripPreviewCanvas = document.getElementById("stripPreviewCanvas");
+    this.gestureToggle = document.getElementById("gestureCaptureToggle");
+    this.gestureStatus = document.getElementById("gestureStatus");
 
     // State
     this.ctx = this.overlay ? this.overlay.getContext("2d") : null;
@@ -504,6 +506,14 @@ class PhotoBooth {
     this.currentStripFrame = "pink";
     this.capturedPhotos = [];
     this.stripCanvas = null;
+
+    // Gesture capture state
+    this.gestureEnabled = false;
+    this.hands = null;
+    this.handBusy = false;
+    this.handLoopId = null;
+    this.gestureHoldFrames = 0;
+    this.lastGestureShot = 0;
 
     // Ring circumference for countdown animation
     this.ringCircumference = 2 * Math.PI * 54; // r=54
@@ -584,10 +594,163 @@ class PhotoBooth {
         this.retake();
       });
     }
+
+    // Gesture capture toggle
+    if (this.gestureToggle) {
+      this.gestureToggle.addEventListener("change", () => {
+        this.gestureEnabled = !!this.gestureToggle.checked;
+        this.updateGestureStatus(
+          this.gestureEnabled ? "Bật (đợi camera...)" : "Tắt",
+          this.gestureEnabled ? "active" : "",
+        );
+        if (this.gestureEnabled && this.isActive) this.startHandTracking();
+        if (!this.gestureEnabled) this.stopHandTracking();
+      });
+    }
+  }
+
+  updateGestureStatus(text, cls = "") {
+    if (!this.gestureStatus) return;
+    this.gestureStatus.classList.remove("active", "ready");
+    if (cls) this.gestureStatus.classList.add(cls);
+    this.gestureStatus.textContent = text;
+  }
+
+  async initHandTracking() {
+    if (this.hands) return true;
+    if (typeof Hands === "undefined") {
+      this.updateGestureStatus("Thiếu thư viện nhận diện tay", "active");
+      return false;
+    }
+
+    this.hands = new Hands({
+      locateFile: (file) =>
+        `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`,
+    });
+    this.hands.setOptions({
+      maxNumHands: 1,
+      modelComplexity: 1,
+      minDetectionConfidence: 0.6,
+      minTrackingConfidence: 0.6,
+    });
+    this.hands.onResults((results) => this.onHandResults(results));
+    return true;
+  }
+
+  // Heuristic: open palm when 4 fingers (index..pinky) are extended
+  isOpenPalm(landmarks) {
+    if (!landmarks || landmarks.length < 21) return false;
+    const tip = (i) => landmarks[i];
+    const isFingerUp = (tipIdx, pipIdx) => tip(tipIdx).y < tip(pipIdx).y;
+    const indexUp = isFingerUp(8, 6);
+    const midUp = isFingerUp(12, 10);
+    const ringUp = isFingerUp(16, 14);
+    const pinkyUp = isFingerUp(20, 18);
+    const upCount = [indexUp, midUp, ringUp, pinkyUp].filter(Boolean).length;
+    return upCount >= 4;
+  }
+
+  async startHandTracking() {
+    if (!this.gestureEnabled || !this.isActive) return;
+    const ok = await this.initHandTracking();
+    if (!ok) return;
+
+    this.updateGestureStatus("Đang nhận diện… giơ ✋ để chụp", "active");
+
+    const loop = async () => {
+      if (!this.gestureEnabled || !this.isActive || !this.hands) return;
+      if (!this.video || this.video.readyState < 2) {
+        this.handLoopId = requestAnimationFrame(loop);
+        return;
+      }
+      if (!this.handBusy) {
+        this.handBusy = true;
+        try {
+          await this.hands.send({ image: this.video });
+        } catch {
+          // ignore transient errors
+        } finally {
+          this.handBusy = false;
+        }
+      }
+      this.handLoopId = requestAnimationFrame(loop);
+    };
+
+    if (this.handLoopId) cancelAnimationFrame(this.handLoopId);
+    this.handLoopId = requestAnimationFrame(loop);
+  }
+
+  stopHandTracking() {
+    if (this.handLoopId) {
+      cancelAnimationFrame(this.handLoopId);
+      this.handLoopId = null;
+    }
+    this.gestureHoldFrames = 0;
+    if (this.gestureEnabled) {
+      this.updateGestureStatus("Bật (đợi camera...)", "active");
+    } else {
+      this.updateGestureStatus("Tắt");
+    }
+  }
+
+  onHandResults(results) {
+    if (!this.gestureEnabled || !this.isActive) return;
+    const lm =
+      results && results.multiHandLandmarks ? results.multiHandLandmarks[0] : null;
+
+    const palm = lm ? this.isOpenPalm(lm) : false;
+    const now = Date.now();
+    const cooldownMs = 4500;
+
+    if (palm && !this.isShooting && !this.captureBtn?.disabled) {
+      this.gestureHoldFrames++;
+      const needFrames = 12; // ~0.4s
+      if (now - this.lastGestureShot < cooldownMs) {
+        this.updateGestureStatus("Đang hồi…", "active");
+        this.gestureHoldFrames = 0;
+        return;
+      }
+
+      const pct = Math.min(
+        100,
+        Math.round((this.gestureHoldFrames / needFrames) * 100),
+      );
+      this.updateGestureStatus(`Giữ ✋ để chụp… ${pct}%`, "ready");
+
+      if (this.gestureHoldFrames >= needFrames) {
+        this.gestureHoldFrames = 0;
+        this.lastGestureShot = now;
+        this.updateGestureStatus("💕 Đang chụp…", "ready");
+        this.captureBtn.click();
+      }
+    } else {
+      this.gestureHoldFrames = 0;
+      this.updateGestureStatus("Đang nhận diện… giơ ✋ để chụp", "active");
+    }
   }
 
   async startCamera() {
     try {
+      // Camera APIs require a secure context (HTTPS or localhost)
+      if (!window.isSecureContext) {
+        alert(
+          "Không thể mở camera vì trang đang chạy ở môi trường không an toàn.\n\n" +
+            "Cách khắc phục nhanh:\n" +
+            "- Mở bằng localhost (ví dụ chạy server local), hoặc\n" +
+            "- Deploy lên HTTPS.\n\n" +
+            "Lưu ý: Mở trực tiếp file (file://) thường sẽ không dùng được camera.",
+        );
+        return;
+      }
+
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        alert(
+          "Trình duyệt của bạn không hỗ trợ Camera API (getUserMedia).\n\n" +
+            "Hãy thử dùng Chrome/Edge phiên bản mới và cấp quyền camera.",
+        );
+        return;
+      }
+
       this.stream = await navigator.mediaDevices.getUserMedia({
         video: {
           width: { ideal: 640 },
@@ -609,14 +772,29 @@ class PhotoBooth {
           this.overlay.width = this.video.videoWidth;
           this.overlay.height = this.video.videoHeight;
           this.drawOverlay();
+          if (this.gestureEnabled) this.startHandTracking();
         },
         { once: true },
       );
     } catch (err) {
       console.error("Camera error:", err);
-      alert(
-        "Không thể mở camera. Hãy thử mở trang qua localhost hoặc HTTPS nhé!",
-      );
+      const name = err && err.name ? err.name : "";
+      const isDenied =
+        name === "NotAllowedError" || name === "PermissionDeniedError";
+      const isNotFound =
+        name === "NotFoundError" || name === "DevicesNotFoundError";
+
+      let msg = "Không thể mở camera.";
+      if (isDenied) {
+        msg +=
+          "\n\nCó thể bạn chưa cấp quyền camera. Hãy bấm 'Allow' hoặc mở lại quyền trong cài đặt site của trình duyệt.";
+      } else if (isNotFound) {
+        msg += "\n\nKhông tìm thấy camera trên thiết bị này.";
+      }
+
+      msg +=
+        "\n\nGợi ý: hãy mở trang qua localhost hoặc HTTPS (mở trực tiếp file:// thường không dùng được camera).";
+      alert(msg);
     }
   }
 
@@ -628,8 +806,9 @@ class PhotoBooth {
     this.video.srcObject = null;
     this.placeholder.classList.remove("hidden");
     this.captureBtn.disabled = true;
-    this.startBtn.textContent = "ðŸ“· Má»Ÿ Camera";
+    this.startBtn.textContent = "📷 Mở Camera";
     this.isActive = false;
+    this.stopHandTracking();
     if (this.animationId) {
       cancelAnimationFrame(this.animationId);
       this.animationId = null;

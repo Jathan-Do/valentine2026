@@ -2025,6 +2025,76 @@ body {
   letter-spacing: 0.5px;
 }
 
+/* ===== PB SWITCH (gesture capture) ===== */
+.pb-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.pb-switch input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pb-switch-ui {
+  width: 46px;
+  height: 26px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  position: relative;
+  transition: var(--transition);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
+.pb-switch-ui::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 3px;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+  transition: var(--transition);
+}
+
+.pb-switch input:checked + .pb-switch-ui {
+  background: rgba(232, 69, 107, 0.45);
+  border-color: rgba(232, 69, 107, 0.55);
+}
+
+.pb-switch input:checked + .pb-switch-ui::after {
+  transform: translateY(-50%) translateX(20px);
+  background: white;
+}
+
+.pb-switch-text {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.pb-gesture-status {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  min-height: 1.1em;
+}
+
+.pb-gesture-status.active {
+  color: rgba(255, 215, 0, 0.95);
+}
+
+.pb-gesture-status.ready {
+  color: rgba(0, 255, 170, 0.85);
+}
+
 .pb-mode-selector {
   display: flex;
   gap: 6px;
