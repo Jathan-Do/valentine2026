@@ -2367,6 +2367,9 @@ body {
     flex-direction: column;
     align-items: center;
   }
+  .interaction-hints {
+    width: 500px !important;
+  }
 }
 
 @media (max-width: 480px) {
@@ -2387,6 +2390,9 @@ body {
     width: 36px;
     height: 36px;
     font-size: 1.1rem;
+  }
+  .interaction-hints {
+    width: 300px !important;
   }
 }
 
@@ -2414,8 +2420,8 @@ body {
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  width: 800px;
   padding: 0.5rem 0.75rem;
-  /* max-width: min(90vw, 420px); */
   background: rgba(20, 10, 18, 0.92);
   border: 1px solid rgba(255, 107, 138, 0.35);
   border-radius: 24px;
