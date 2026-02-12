@@ -1591,6 +1591,16 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
   });
+  //Close noti hint
+  const hintDismiss = document.getElementById("hintDismiss");
+  const interactionHints = document.getElementById("interactionHints");
+
+  if (hintDismiss && interactionHints) {
+    hintDismiss.addEventListener("click", () => {
+      interactionHints.style.display = "none";
+    });
+  }
+
   // ===== PARALLAX ON MOUSE MOVE =====
   document.addEventListener("mousemove", (e) => {
     const x = (e.clientX / window.innerWidth - 0.5) * 2;
