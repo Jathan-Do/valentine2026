@@ -678,8 +678,7 @@ class PhotoBooth {
 
       const tick = () => {
         this.countdownNumber.textContent = remaining;
-        this.countdownLabel.textContent =
-          remaining > 0 ? "Chuẩn bị!" : "💕";
+        this.countdownLabel.textContent = remaining > 0 ? "Chuẩn bị!" : "💕";
 
         // Animate ring: stroke-dashoffset goes from 0 to full circumference
         const progress = (seconds - remaining) / seconds;
@@ -1576,7 +1575,22 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   sections.forEach((section) => sectionObserver.observe(section));
-
+  
+  // --- Keyboard ---
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowRight" || e.key === " ") {
+      e.preventDefault();
+      goToSection("next");
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      goToSection("prev");
+    } else if (e.key === "m" || e.key === "M") {
+      if (!e.ctrlKey && !e.metaKey && !e.altKey) {
+        e.preventDefault();
+        musicToggle.click();
+      }
+    }
+  });
   // ===== PARALLAX ON MOUSE MOVE =====
   document.addEventListener("mousemove", (e) => {
     const x = (e.clientX / window.innerWidth - 0.5) * 2;

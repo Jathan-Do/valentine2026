@@ -1,685 +1,699 @@
 <!doctype html>
 <html lang="vi">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Gửi Ngân yêu 💕</title>
-    <meta
-      name="description"
-      content="A special gift for Kim Ngân - Valentine, Lunar New Year & Birthday" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link rel="icon" type="image/x-icon" href="/images/792174.png">
-    <link
-      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Quicksand:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
-      rel="stylesheet" />
-    <link rel="stylesheet" href="style.css" />
-    <!-- Three.js -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  </head>
-  <body>
-    <!-- Floating Hearts Canvas -->
-    <canvas id="heartsCanvas"></canvas>
 
-    <!-- Audio -->
-    <audio id="bgMusic" loop>
-      <source
-        src="/audio/Low G ｜ In Love (ft. JustaTee) ｜ ‘L2K’ The Album - Low G.mp3"
-        type="audio/mpeg" />
-    </audio>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gửi Ngân yêu 💕</title>
+  <meta name="description" content="A special gift for Kim Ngân - Valentine, Lunar New Year & Birthday" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" type="image/x-icon" href="/images/792174.png" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Quicksand:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
-    <!-- Music Toggle -->
-    <button id="musicToggle" class="music-btn" aria-label="Toggle Music">
-      <span class="music-icon">🎵</span>
-      <span class="music-wave">
-        <span></span><span></span><span></span><span></span>
-      </span>
-    </button>
 
-    <!-- ==================== SECTION 1: INTRO with 3D HEART ==================== -->
-    <section id="intro" class="section intro-section active">
-      <div class="intro-content">
-        <div class="heart-3d-scene-container">
-          <canvas id="heart3dScene"></canvas>
-        </div>
-        <h1 class="intro-title">
-          <span class="title-line" data-delay="0">Gửi đến em</span>
-          <span class="title-line accent" data-delay="200">Ngân yêu</span>
-          <span class="title-line small" data-delay="400"
-            >💕 pé · M ilk · Boo 💕</span
-          >
-        </h1>
-        <p class="intro-subtitle">Ba dịp đặc biệt — Một tình yêu duy nhất</p>
-        <button id="enterBtn" class="enter-btn">
-          <span class="btn-text"
-            >💕 Mở trái tim đón nhận tình yêu to bự này của anh đii 💕</span
-          >
-          <span class="btn-glow"></span>
-        </button>
+</head>
+
+<body>
+  <!-- Floating Hearts Canvas -->
+  <canvas id="heartsCanvas"></canvas>
+
+  <!-- Audio -->
+  <audio id="bgMusic" loop>
+    <source src="/audio/Low G ｜ In Love (ft. JustaTee) ｜ ‘L2K’ The Album - Low G.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Music Toggle -->
+  <button id="musicToggle" class="music-btn" aria-label="Toggle Music">
+    <span class="music-icon">🎵</span>
+    <span class="music-wave">
+      <span></span><span></span><span></span><span></span>
+    </span>
+  </button>
+
+  <!-- ==================== SECTION 1: INTRO with 3D HEART ==================== -->
+  <section id="intro" class="section intro-section active">
+    <div class="intro-content">
+      <div class="heart-3d-scene-container">
+        <canvas id="heart3dScene"></canvas>
       </div>
-      <div class="scroll-indicator hidden">
-        <span>Cuộn xuống</span>
-        <div class="scroll-arrow">↓</div>
-      </div>
-    </section>
+      <h1 class="intro-title">
+        <span class="title-line" data-delay="0">Gửi đến em</span>
+        <span class="title-line accent" data-delay="200">Ngân yêu</span>
+        <span class="title-line small" data-delay="400">💕 pé · M ilk · Boo 💕</span>
+      </h1>
+      <p class="intro-subtitle">Ba dịp đặc biệt — Một tình yêu duy nhất</p>
+      <button id="enterBtn" class="enter-btn">
+        <span class="btn-text">💕 Mở trái tim đón nhận tình yêu to bự này của anh đii 💕</span>
+        <span class="btn-glow"></span>
+      </button>
+    </div>
+    <div class="scroll-indicator hidden">
+      <span>Cuộn xuống</span>
+      <div class="scroll-arrow">↓</div>
+    </div>
+  </section>
 
-    <!-- ==================== SECTION 2: VALENTINE ==================== -->
-    <section id="valentine" class="section valentine-section">
-      <div class="section-header">
-        <div class="section-badge">14/02</div>
-        <h2 class="section-title">Happy Valentine's Day</h2>
-        <p class="section-desc">
-          Ngày lễ tình nhân — Gửi trọn yêu thương đến em
-        </p>
+  <!-- ==================== SECTION 2: VALENTINE ==================== -->
+  <section id="valentine" class="section valentine-section">
+    <div class="section-header">
+      <div class="section-badge">14/02</div>
+      <h2 class="section-title">Happy Valentine's Day</h2>
+      <p class="section-desc">
+        Ngày lễ tình nhân — Gửi trọn yêu thương đến em
+      </p>
+    </div>
+    <div class="valentine-layout">
+      <div class="section-image-card">
+        <img src="/images/a00e46eb6ce5a4bbfdf4.jpg" alt="Valentine Roses" class="section-image" />
       </div>
-      <div class="valentine-layout">
-        <div class="section-image-card">
-          <img
-            src="/images/a00e46eb6ce5a4bbfdf4.jpg"
-            alt="Valentine Roses"
-            class="section-image" />
-        </div>
-        <div class="card-3d-wrapper">
-          <div class="card-3d" id="card3d">
-            <div class="card-face card-front">
-              <div class="card-front-content">
-                <div class="card-envelope">
-                  <div class="envelope-flap"></div>
-                  <div class="envelope-body">
-                    <span class="envelope-heart">💌</span>
-                    <p>Click để mở thiệp</p>
-                  </div>
+      <div class="card-3d-wrapper">
+        <div class="card-3d" id="card3d">
+          <div class="card-face card-front">
+            <div class="card-front-content">
+              <div class="card-envelope">
+                <div class="envelope-flap"></div>
+                <div class="envelope-body">
+                  <span class="envelope-heart">💌</span>
+                  <p>Click để mở thiệp</p>
                 </div>
-              </div>
-            </div>
-            <div class="card-face card-back">
-              <div class="card-back-content">
-                <div class="card-decorations">
-                  <span class="deco deco-1">✨</span>
-                  <span class="deco deco-2">💕</span>
-                  <span class="deco deco-3">🌹</span>
-                  <span class="deco deco-4">✨</span>
-                </div>
-                <h3>Gửi pé Ngân,</h3>
-                <p class="card-message">
-                  Valentine này, anh chỉ muốn nói:<br /><br />
-                  Em là điều tuyệt vời nhất<br />
-                  đã đến trong cuộc đời anh.<br /><br />
-                  Mỗi ngày bên em<br />
-                  là một ngày hạnh phúc.<br /><br />
-                  <span class="highlight">Anh yêu em nhiều lắm! 💖</span>
-                </p>
-                <div class="card-signature">— Người luôn yêu em —</div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== SECTION 3: LOVE LETTER ==================== -->
-    <section id="loveLetter" class="section letter-section">
-      <div class="section-header">
-        <h2 class="section-title">Lá Thư Tình</h2>
-        <p class="section-desc">Nhấn vào phong bì để đọc thư nhé</p>
-      </div>
-      <div class="letter-layout">
-        <div class="section-image-card">
-          <img
-            src="/images/z5394926194090_96b73559494b5c25d733efd096566b0e.jpg"
-            alt="Love Letter"
-            class="section-image" />
-        </div>
-        <div class="letter-wrapper">
-          <div class="letter-outer" id="letterOuter">
-            <!-- Sealed Envelope -->
-            <div class="envelope-container" id="envelopeContainer">
-              <div class="env-top"></div>
-              <div class="env-front">
-                <div class="env-seal">
-                  <span>💋</span>
-                </div>
-                <p class="env-label">Gửi Ngân yêu 💕</p>
-                <p class="env-hint">~ nhấn để mở ~</p>
+          <div class="card-face card-back">
+            <div class="card-back-content">
+              <div class="card-decorations">
+                <span class="deco deco-1">✨</span>
+                <span class="deco deco-2">💕</span>
+                <span class="deco deco-3">🌹</span>
+                <span class="deco deco-4">✨</span>
               </div>
-            </div>
-            <!-- Letter that slides out -->
-            <div class="letter-paper" id="letterPaper">
-              <div class="letter-content">
-                <div class="letter-header-deco">~ ❤️ ~</div>
-                <h3 class="letter-greeting">Pé Ngân yêu,</h3>
-                <p class="letter-text">
-                  Anh muốn viết cho em vài dòng, để em biết rằng em quan trọng
-                  với anh như thế nào...
-                </p>
-                <p class="letter-text">
-                  Từ ngày có M ilk, thế giới của anh trở nên rực rỡ hơn. Nụ cười
-                  của em là ánh nắng, giọng nói của em là giai điệu đẹp nhất mà
-                  anh từng nghe.
-                </p>
-                <p class="letter-text">
-                  Anh sẽ luôn ở bên Boo, trong những ngày nắng đẹp cũng như
-                  những ngày mưa giông. Vì bên em, mọi thứ đều trở nên ý nghĩa.
-                </p>
-                <p class="letter-text highlight-text">
-                  Anh yêu Ngân nhiều lắm! 💕
-                </p>
-                <div class="letter-signature">
-                  <span>Mãi yêu em,</span>
-                  <span class="signature-name">--Anh--</span>
-                </div>
-                <div class="letter-footer-deco">~ 🌹 ~</div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== SECTION 4: GIAO THỪA - TẾT ==================== -->
-    <section id="giaoThua" class="section tet-section">
-      <div class="section-header">
-        <div class="section-badge tet-badge">16/02</div>
-        <h2 class="section-title tet-title">🏮 Giao Thừa 2026 🏮</h2>
-        <p class="section-desc">Đón năm mới Bính Ngọ bên nhau</p>
-      </div>
-      <div class="tet-content">
-        <div class="lantern-row">
-          <div class="lantern">🏮</div>
-          <div class="lantern">🏮</div>
-          <div class="lantern">🏮</div>
-        </div>
-        <div class="tet-layout">
-          <div class="section-image-card tet-image-card">
-            <img
-              src="/images/472667093_951204800297469_4409965657875104884_n.jpg"
-              alt="Tết Lanterns"
-              class="section-image" />
-          </div>
-          <div class="tet-card">
-            <div class="tet-card-inner">
-              <div class="tet-icon">🧧</div>
-              <h3>Chúc Mừng Năm Mới!</h3>
-              <p class="tet-message">
-                Năm nay, tuy mình vẫn chưa đón giao thừa cùng nhau nhưng không
-                sao, anh tin là sẽ sớm tới lúc đó thôi hehe. Khi pháo hoa thắp
-                sáng bầu trời, anh chúc em năm mới sẽ gặp thật nhiều may mắn,
-                niềm vui và hạnh phúc.
+              <h3>Gửi pé Ngân,</h3>
+              <p class="card-message">
+                Valentine này, anh chỉ muốn nói:<br /><br />
+                Em chính là điều tuyệt vời nhất đã đến trong cuộc đời anh.<br />
+                Từ khi có em, mọi thứ xung quanh anh dường như trở nên dịu
+                dàng hơn, vui hơn và ý nghĩa hơn rất nhiều.<br /><br />
+                Mỗi ngày bên em đều là một ngày hạnh phúc.<br />
+                Dù chỉ là những khoảnh khắc nhỏ bé như cùng nhau nói chuyện,
+                cười đùa hay đơn giản là ở cạnh nhau, với anh, đó đều là những
+                kỷ niệm đáng trân trọng nhất.<br /><br />
+                Cảm ơn em vì đã xuất hiện, vì đã luôn quan tâm, thấu hiểu và
+                yêu thương anh theo cách riêng của em.<br />
+                Anh thật sự may mắn khi có em trong cuộc đời này.<br /><br />
+                Anh mong rằng không chỉ Valentine, mà tất cả những ngày sau
+                này, chúng ta vẫn sẽ nắm tay nhau, cùng nhau đi tiếp, cùng
+                nhau chia sẻ mọi niềm vui và cả những lúc buồn.<br /><br />
+                Thương em rất nhiều ❤️
               </p>
-              <div class="tet-wishes">
-                <div class="tet-wish-item" data-aos="fade-up">
-                  <span class="tet-emoji">🌸</span>
-                  <span>Sức khỏe dồi dào</span>
-                </div>
-                <div class="tet-wish-item" data-aos="fade-up">
-                  <span class="tet-emoji">💰</span>
-                  <span>Tài lộc đầy nhà</span>
-                </div>
-                <div class="tet-wish-item" data-aos="fade-up">
-                  <span class="tet-emoji">💕</span>
-                  <span>Tình yêu viên mãn</span>
-                </div>
-                <div class="tet-wish-item" data-aos="fade-up">
-                  <span class="tet-emoji">✨</span>
-                  <span>Vạn sự như ý</span>
-                </div>
+              <span class="highlight">Anh yêu em nhiều lắm! 💖</span>
+              <div class="card-signature">— Người luôn yêu em —</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 3: LOVE LETTER ==================== -->
+  <section id="loveLetter" class="section letter-section">
+    <div class="section-header">
+      <h2 class="section-title">Lá Thư Tình</h2>
+      <p class="section-desc">Nhấn vào phong bì để đọc thư nhé</p>
+    </div>
+    <div class="letter-layout">
+      <div class="section-image-card">
+        <img src="/images/z5394926194090_96b73559494b5c25d733efd096566b0e.jpg" alt="Love Letter"
+          class="section-image" />
+      </div>
+      <div class="letter-wrapper">
+        <div class="letter-outer" id="letterOuter">
+          <!-- Sealed Envelope -->
+          <div class="envelope-container" id="envelopeContainer">
+            <div class="env-top"></div>
+            <div class="env-front">
+              <div class="env-seal">
+                <span>💋</span>
               </div>
-              <div class="tet-lixi" id="tetLixi">
-                <div class="lixi-envelope" id="lixiEnvelope">
-                  <div class="lixi-front">
-                    <span class="lixi-char">福</span>
-                    <p>Nhấn để nhận lì xì</p>
-                  </div>
-                  <div class="lixi-message" id="lixiMessage">
-                    <p>🧧 Lì xì yêu thương 🧧</p>
-                    <span class="lixi-amount">Triệu triệu nụ hôn 💋</span>
-                    <span class="lixi-note">Gửi tặng M ilk yêu!</span>
-                  </div>
-                </div>
+              <p class="env-label">Gửi Ngân yêu 💕</p>
+              <p class="env-hint">~ nhấn để mở ~</p>
+            </div>
+          </div>
+          <!-- Letter that slides out -->
+          <div class="letter-paper" id="letterPaper">
+            <div class="letter-content">
+              <div class="letter-header-deco">~ ❤️ ~</div>
+              <h3 class="letter-greeting">Pé Ngân yêu,</h3>
+              <p class="letter-text">
+                Anh muốn viết cho em vài dòng, chỉ đơn giản để em biết rằng em
+                quan trọng với anh đến nhường nào…
+              </p>
+              <p class="letter-text">
+                Từ ngày có Milk, thế giới của anh bỗng trở nên rực rỡ hơn rất
+                nhiều. Mọi thứ xung quanh như vui hơn, ấm áp hơn. Nụ cười của
+                em giống như ánh nắng nhỏ, chỉ cần nhìn thấy thôi cũng đủ làm
+                tim anh tan chảy. Còn giọng nói của em, với anh, là giai điệu
+                dịu dàng và đẹp nhất mà anh từng nghe trong đời.
+              </p>
+              <p class="letter-text">
+                Ở bên em, anh luôn cảm thấy bình yên, cảm thấy mình thật may
+                mắn. Dù chỉ là những khoảnh khắc nhỏ bé, cùng nhau nói chuyện,
+                trêu đùa hay im lặng ngồi cạnh nhau, anh đều trân trọng tất
+                cả.
+              </p>
+              <p class="letter-text">
+                Anh hứa sẽ luôn ở bên Boo, trong những ngày nắng đẹp cũng như
+                những ngày mưa giông, cùng em đi qua mọi buồn vui của cuộc
+                sống. Vì với anh, chỉ cần có em bên cạnh, mọi thứ đều trở nên
+                ý nghĩa.
+              </p>
+              <p class="letter-text">
+                Bài hát mà anh chọn là In Love. Lí do anh để bài hát này làm
+                nhạc nền bởi vì nó rất ý nghĩa, đặc biệt là với anh và em. Em
+                có thể nghe kĩ lời bài hát trong lúc xem thư này nhé, Low G
+                thì viết lời bài hát để bày tỏ với Dương Fynn, còn anh thì mượn
+                lời bài hát để bày tỏ với em.
+              </p>
+              <p class="letter-text highlight-text">
+                Cảm ơn em đã đến bên anh. Và… anh yêu em nhiều lắm 💕
+              </p>
+              <div class="letter-signature">
+                <span>Mãi yêu em,</span>
+                <span class="signature-name">--Anh--</span>
               </div>
+              <div class="letter-footer-deco">~ 🌹 ~</div>
             </div>
-          </div>
-        </div>
-        <div class="blossom-row">
-          <span>🌸</span><span>🌺</span><span>🌸</span><span>🌺</span
-          ><span>🌸</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== SECTION 5: SINH NHẬT ==================== -->
-    <section id="birthday" class="section birthday-section">
-      <div class="section-header">
-        <div class="section-badge birthday-badge">19/02</div>
-        <h2 class="section-title birthday-title">🎂 Happy Birthday Ngân! 🎂</h2>
-        <p class="section-desc">Sinh nhật vui vẻ pé Trần Kim Ngân yêu</p>
-      </div>
-      <div class="birthday-content">
-        <div class="birthday-top-row">
-          <div class="section-image-card birthday-image-card">
-            <img
-              src="/images/z5394926216758_78536295f3259ec81d689e0ba9b01b21.jpg"
-              alt="Birthday Celebration"
-              class="section-image" />
-          </div>
-          <div class="cake-container" id="cakeContainer">
-            <div class="cake">
-              <div class="candles">
-                <div class="candle">
-                  <div class="flame" id="flame1">🔥</div>
-                </div>
-                <div class="candle">
-                  <div class="flame" id="flame2">🔥</div>
-                </div>
-                <div class="candle">
-                  <div class="flame" id="flame3">🔥</div>
-                </div>
-              </div>
-              <div class="cake-top">🎂</div>
-              <div class="cake-body">
-                <span class="cake-text">Happy Birthday</span>
-                <span class="cake-name">♥ Ngân ♥</span>
-              </div>
-            </div>
-            <button class="blow-btn" id="blowBtn">🌬️ Thổi nến nào!</button>
-          </div>
-        </div>
-        <div class="birthday-message-card">
-          <div class="balloons">
-            <span class="balloon" style="--delay: 0s; --color: #ff6b8a"
-              >🎈</span
-            >
-            <span class="balloon" style="--delay: 0.3s; --color: #ffd700"
-              >🎈</span
-            >
-            <span class="balloon" style="--delay: 0.6s; --color: #ff8fa3"
-              >🎈</span
-            >
-            <span class="balloon" style="--delay: 0.9s; --color: #ff69b4"
-              >🎈</span
-            >
-          </div>
-          <h3>Pé Ngân ơi,</h3>
-          <p>
-            Ngày 19/2 — ngày mà thế giới có thêm một thiên thần nhỏ. Anh cảm ơn
-            vũ trụ đã mang em đến cuộc đời này, để anh có cơ hội được yêu thương
-            và trân trọng em theo cách của anh dù đôi lúc làm em cảm thấy khó
-            chịu và tủi thân.
-          </p>
-          <p>
-            Anh chúc em luôn xinh đẹp, luôn tỏa sáng, và luôn hạnh phúc mỗi
-            ngày. Sinh nhật vui vẻ nha! 🥳
-          </p>
-          <div class="birthday-sign">🎉 HBD Ngân 🎉</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== SECTION 6: LOVE TIMELINE ==================== -->
-    <section id="timeline" class="section timeline-section">
-      <div class="section-header">
-        <h2 class="section-title">Hành Trình Yêu Thương</h2>
-        <p class="section-desc">Những khoảnh khắc đáng nhớ của chúng mình</p>
-      </div>
-      <div class="timeline-container">
-        <div class="timeline-line"></div>
-
-        <div class="timeline-item" data-side="left">
-          <div class="timeline-dot">💕</div>
-          <div class="timeline-card">
-            <div class="section-image-card birthday-image-card">
-              <img
-                src="/images/b3170e2b3e25f67baf34.jpg"
-                alt="Birthday Celebration"
-                class="section-image" />
-              <div class="image-glow birthday-glow"></div>
-            </div>
-            <h4>Ngày đầu tiên</h4>
-            <p>
-              Khoảnh khắc đó, anh đã biết mình sẽ phải yêu em rất nhiều, nhiều
-              đến mức phải chịu được cái tính í ẹ của em.
-            </p>
-            <span class="timeline-date">Ngày ấy...</span>
-          </div>
-        </div>
-
-        <div class="timeline-item" data-side="right">
-          <div class="timeline-dot">💝</div>
-          <div class="timeline-card">
-            <div class="section-image-card birthday-image-card">
-              <img
-                src="/images/Screenshot 2023-10-14 123120.png"
-                alt="Birthday Celebration"
-                class="section-image" />
-              <div class="image-glow birthday-glow"></div>
-            </div>
-            <h4>Từng ngày bên nhau</h4>
-            <p>
-              Chúng mình đã cùng nhau tạo nên biết bao kỷ niệm đẹp...Đôi lúc
-              cũng có hơi không đẹp nhưng mà có vậy tình yêu mới bền vững
-              được... nhỉ
-            </p>
-            <span class="timeline-date">Từng ngày...</span>
-          </div>
-        </div>
-
-        <div class="timeline-item" data-side="left">
-          <div class="timeline-dot">💗</div>
-          <div class="timeline-card">
-            <div class="section-image-card birthday-image-card">
-              <img
-                src="/images/fe2b95a1baaf72f12bbe.jpg"
-                alt="Birthday Celebration"
-                class="section-image" />
-              <div class="image-glow birthday-glow"></div>
-            </div>
-            <h4>Valentine · Tết · Sinh nhật</h4>
-            <p>
-              Ba dịp đặc biệt liên tiếp — 14/2, 16/2, 19/2 — tất cả đều dành cho
-              Ngân!
-            </p>
-            <p>
-              Anh nghe nói 3 năm nữa valantine còn đặc biệt hơn nữa thì phải.
-              Anh sẽ cố gắng để có một valantine thật đặc biệt với em.
-            </p>
-            <span class="timeline-date">Tháng 2, 2026</span>
-          </div>
-        </div>
-
-        <div class="timeline-item" data-side="right">
-          <div class="timeline-dot">💖</div>
-          <div class="timeline-card">
-            <div class="section-image-card birthday-image-card">
-              <img
-                src="/images/z6248978762337_8996adb3236c4fea761c49ea9fd268f8.jpg"
-                alt="Birthday Celebration"
-                class="section-image" />
-              <div class="image-glow birthday-glow"></div>
-            </div>
-            <h4>Tương lai</h4>
-            <p>Anh muốn cùng em viết tiếp câu chuyện tình yêu này mãi mãi...</p>
-            <p>
-              Này không phải cầu hôn đâu nhe, đừng tưởng bở nha pé. Ghi tới đây
-              mới nhớ ra là mình yêu nhau mà không anh còn chưa tỏ tình nữa, đừng có giận anh nha,...
-            </p>
-            <p>Chắc phải đợi tới lúc cầu hôn để bù lại quá ! kkkk</p>
-            <span class="timeline-date">Và mãi về sau...</span>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ==================== SECTION 7: PHOTO BOOTH ==================== -->
-    <section id="photoBooth" class="section photobooth-section">
-      <div class="section-header">
-        <h2 class="section-title">📸 Khoảnh Khắc Của Mình</h2>
-        <p class="section-desc">Chụp ảnh kỷ niệm như photo booth thật nào!</p>
+  <!-- ==================== SECTION 4: GIAO THỪA - TẾT ==================== -->
+  <section id="giaoThua" class="section tet-section">
+    <div class="section-header">
+      <div class="section-badge tet-badge">16/02</div>
+      <h2 class="section-title tet-title">🏮 Giao Thừa 2026 🏮</h2>
+      <p class="section-desc">Đón năm mới Bính Ngọ bên nhau</p>
+    </div>
+    <div class="tet-content">
+      <div class="lantern-row">
+        <div class="lantern">🏮</div>
+        <div class="lantern">🏮</div>
+        <div class="lantern">🏮</div>
       </div>
-      <div class="photobooth-content">
-        <!-- Step 1: Settings -->
-        <div class="pb-settings" id="pbSettings">
-          <div class="pb-setting-group">
-            <label class="pb-label">Số ảnh chụp</label>
-            <div class="pb-mode-selector" id="modeSelector">
-              <button class="pb-mode-btn active" data-shots="1">1 ảnh</button>
-              <button class="pb-mode-btn" data-shots="4">4 ảnh</button>
-              <button class="pb-mode-btn" data-shots="8">8 ảnh</button>
-            </div>
-          </div>
-          <div class="pb-setting-group">
-            <label class="pb-label">Khung trang trí</label>
-            <div class="pb-strip-frames" id="stripFrameSelector">
-              <button
-                class="pb-strip-frame active"
-                data-strip="pink"
-                title="Hồng tình yêu">
-                <span
-                  class="strip-preview"
-                  style="background: linear-gradient(135deg, #ffe0ec, #ffb3c6)"
-                  >💕</span
-                >
-              </button>
-              <button
-                class="pb-strip-frame"
-                data-strip="gold"
-                title="Vàng sang trọng">
-                <span
-                  class="strip-preview"
-                  style="background: linear-gradient(135deg, #fff8e1, #ffd54f)"
-                  >✨</span
-                >
-              </button>
-              <button
-                class="pb-strip-frame"
-                data-strip="blue"
-                title="Xanh dịu dàng">
-                <span
-                  class="strip-preview"
-                  style="background: linear-gradient(135deg, #e3f2fd, #90caf9)"
-                  >�</span
-                >
-              </button>
-              <button
-                class="pb-strip-frame"
-                data-strip="classic"
-                title="Trắng cổ điển">
-                <span
-                  class="strip-preview"
-                  style="background: linear-gradient(135deg, #fafafa, #e0e0e0)"
-                  >🤍</span
-                >
-              </button>
-            </div>
-            <div class="strip-frame-preview-wrap" id="stripFramePreview">
-              <canvas id="stripPreviewCanvas"></canvas>
-            </div>
-          </div>
-          <div class="pb-setting-group">
-            <label class="pb-label">Overlay camera</label>
-            <div class="frame-selector" id="frameSelector">
-              <button
-                class="frame-option active"
-                data-frame="hearts"
-                title="Trái tim">
-                💕
-              </button>
-              <button class="frame-option" data-frame="flowers" title="Hoa">
-                🌸
-              </button>
-              <button class="frame-option" data-frame="stars" title="Ngôi sao">
-                ✨
-              </button>
-            </div>
-          </div>
-        </div>
-
-        <!-- Camera View -->
-        <div class="camera-container" id="cameraContainer">
-          <div class="camera-frame">
-            <div class="frame-corner frame-tl"></div>
-            <div class="frame-corner frame-tr"></div>
-            <div class="frame-corner frame-bl"></div>
-            <div class="frame-corner frame-br"></div>
-            <!-- <div class="frame-label">Anh ❤️ Ngân</div> -->
-            <video id="cameraVideo" autoplay playsinline></video>
-            <canvas id="cameraOverlay"></canvas>
-            <!-- Countdown Overlay -->
-            <div class="countdown-overlay" id="countdownOverlay">
-              <div class="countdown-ring">
-                <svg viewBox="0 0 120 120">
-                  <circle cx="60" cy="60" r="54" class="countdown-ring-bg" />
-                  <circle
-                    cx="60"
-                    cy="60"
-                    r="54"
-                    class="countdown-ring-fill"
-                    id="countdownRing" />
-                </svg>
-                <span class="countdown-number" id="countdownNumber">3</span>
-              </div>
-              <div class="countdown-label" id="countdownLabel">Chuẩn bị!</div>
-            </div>
-            <!-- Shot progress -->
-            <div class="shot-progress" id="shotProgress">
-              <span id="shotProgressText">Ảnh 1/4</span>
-            </div>
-            <div class="camera-placeholder" id="cameraPlaceholder">
-              <span class="camera-placeholder-icon">📷</span>
-              <p>Nhấn bên dưới để mở camera</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Controls -->
-        <div class="photobooth-controls">
-          <button class="photobooth-btn" id="startCameraBtn">
-            📷 Mở Camera
-          </button>
-          <button class="photobooth-btn capture-btn" id="captureBtn" disabled>
-            📸 Bắt đầu chụp!
-          </button>
-        </div>
-
-        <!-- Result: Photo Strip Preview -->
-        <div class="pb-result" id="pbResult">
-          <h3 class="pb-result-title">🖼️ Dãy ảnh của mình!</h3>
-          <div class="pb-strip-preview-area" id="stripPreviewArea">
-            <!-- Generated strip canvas will appear here -->
-          </div>
-          <div class="pb-result-actions">
-            <button class="photobooth-btn" id="downloadStripBtn">
-              📥 Tải ảnh về
-            </button>
-            <button class="photobooth-btn pb-retake-btn" id="retakeBtn">
-              🔄 Chụp lại
-            </button>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================== SECTION 8: INTERACTIVE WISHES ==================== -->
-    <section id="wishes" class="section wishes-section">
-      <div class="section-header">
-        <h2 class="section-title">Điều Ước Cho Ngân</h2>
-        <p class="section-desc">Chạm vào những ngôi sao để nhận lời yêu 🌟</p>
-        <div class="section-image-card birthday-image-card" style="margin: 12px auto;">
-          <img
-            src="/images/z3783986022061_42cc76ab7b28c446a4b8caf964e04f4b.jpg"
-            alt="Birthday Celebration"
+      <div class="tet-layout">
+        <div class="section-image-card tet-image-card">
+          <img src="/images/472667093_951204800297469_4409965657875104884_n.jpg" alt="Tết Lanterns"
             class="section-image" />
-          <div class="image-glow birthday-glow"></div>
+        </div>
+        <div class="tet-card">
+          <div class="tet-card-inner">
+            <div class="tet-icon">🧧</div>
+            <h3>Chúc Mừng Năm Mới!</h3>
+            <br class="tet-message">
+            Năm nay, tuy mình vẫn chưa thể đón giao thừa cùng nhau, chưa
+            được đứng cạnh nhau ngắm pháo hoa hay chúc nhau câu đầu năm trực
+            tiếp… nhưng không sao cả. Anh tin rằng rồi sẽ sớm đến một ngày,
+            chúng ta có thể cùng nhau trải qua những khoảnh khắc đó thôi,
+            hehe. </br>Khi pháo hoa thắp sáng bầu trời, anh chỉ ước mình có thể ở
+            bên em, nắm tay em thật chặt và nói lời chúc năm mới. Anh mong
+            em một năm mới thật nhiều may mắn, thật nhiều niềm vui và thật
+            nhiều hạnh phúc. </br>Chúc em luôn khỏe mạnh, luôn cười thật tươi,
+            làm được những điều em thích và đạt được những điều em mong
+            muốn. Nếu có chuyện buồn hay mệt mỏi, hãy nhớ rằng phía sau em
+            vẫn luôn có anh, sẵn sàng lắng nghe và ở bên em. </br>Hy vọng năm mới
+            này, mình sẽ có thêm thật nhiều kỷ niệm cùng nhau, nhiều buổi
+            hẹn hò hơn, nhiều cái ôm hơn, và nhiều “chúng ta” hơn nữa. </br>Chúc
+            pé một năm mới an nhiên và ngập tràn yêu thương. Anh thương em
+            nhiều lắm ❤️</br></br>
+            </p>
+            <div class="tet-wishes">
+              <div class="tet-wish-item" data-aos="fade-up" data-aos-duration="1000">
+                <span class="tet-emoji">🌸</span>
+                <span>Sức khỏe dồi dào</span>
+              </div>
+              <div class="tet-wish-item" data-aos="fade-up" data-aos-duration="1000">
+                <span class="tet-emoji">💰</span>
+                <span>Tài lộc đầy nhà</span>
+              </div>
+              <div class="tet-wish-item" data-aos="fade-up" data-aos-duration="1000">
+                <span class="tet-emoji">💕</span>
+                <span>Tình yêu viên mãn</span>
+              </div>
+              <div class="tet-wish-item" data-aos="fade-up" data-aos-duration="1000">
+                <span class="tet-emoji">✨</span>
+                <span>Vạn sự như ý</span>
+              </div>
+            </div>
+            <div class="tet-lixi" id="tetLixi">
+              <div class="lixi-envelope" id="lixiEnvelope">
+                <div class="lixi-front">
+                  <span class="lixi-char">福</span>
+                  <p>Nhấn để nhận lì xì</p>
+                </div>
+                <div class="lixi-message" id="lixiMessage">
+                  <p>🧧 Lì xì yêu thương 🧧</p>
+                  <span class="lixi-amount">Triệu triệu nụ hôn 💋</span>
+                  <span class="lixi-note">Gửi tặng M ilk yêu!</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="stars-container" id="starsContainer">
-        <div class="star-item" data-wish="Ngân là tất cả thế giới của anh 🌍💕">
-          <div class="star-glow"></div>
-          <span class="star-emoji">⭐</span>
-        </div>
-        <div
-          class="star-item"
-          data-wish="Mỗi giây phút bên M ilk đều là hạnh phúc ✨">
-          <div class="star-glow"></div>
-          <span class="star-emoji">🌟</span>
-        </div>
-        <div
-          class="star-item"
-          data-wish="Anh sẽ yêu Boo đến tận cùng thời gian 💖">
-          <div class="star-glow"></div>
-          <span class="star-emoji">💫</span>
-        </div>
-        <div
-          class="star-item"
-          data-wish="Pé Ngân là giấc mơ đẹp nhất của anh 🌙">
-          <div class="star-glow"></div>
-          <span class="star-emoji">✨</span>
-        </div>
-        <div class="star-item" data-wish="Bên em, anh thấy mình hoàn hảo 🥰">
-          <div class="star-glow"></div>
-          <span class="star-emoji">🌠</span>
-        </div>
-        <div
-          class="star-item"
-          data-wish="Tình yêu dành cho Ngân là bất diệt 💞">
-          <div class="star-glow"></div>
-          <span class="star-emoji">⭐</span>
-        </div>
+      <div class="blossom-row">
+        <span>🌸</span><span>🌺</span><span>🌸</span><span>🌺</span><span>🌸</span>
       </div>
-      <div class="wish-display" id="wishDisplay">
-        <p class="wish-text" id="wishText">Chạm vào ngôi sao...</p>
-      </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- ==================== SECTION 9: FIREWORKS FINALE ==================== -->
-    <section id="finale" class="section finale-section">
-      <canvas id="fireworksCanvas"></canvas>
-      <div class="finale-content">
-        <h2 class="finale-title">
-          <span>Anh</span>
-          <span class="finale-heart">❤️</span>
-          <span>em</span>
-        </h2>
-        <p class="finale-message">Forever & Always · Mãi mãi bên nhau</p>
-        <button id="fireworkBtn" class="firework-btn">
-          🎆 Bắn pháo hoa tình yêu 🎆
+  <!-- ==================== SECTION 5: SINH NHẬT ==================== -->
+  <section id="birthday" class="section birthday-section">
+    <div class="section-header">
+      <div class="section-badge birthday-badge">19/02</div>
+      <h2 class="section-title birthday-title">🎂 Happy Birthday Ngân! 🎂</h2>
+      <p class="section-desc">Sinh nhật vui vẻ pé Trần Kim Ngân yêu</p>
+    </div>
+    <div class="birthday-content">
+      <div class="birthday-top-row">
+        <div class="section-image-card birthday-image-card">
+          <img src="/images/z5394926216758_78536295f3259ec81d689e0ba9b01b21.jpg" alt="Birthday Celebration"
+            class="section-image" />
+        </div>
+        <div class="cake-container" id="cakeContainer">
+          <div class="cake">
+            <div class="candles">
+              <div class="candle">
+                <div class="flame" id="flame1">🔥</div>
+              </div>
+              <div class="candle">
+                <div class="flame" id="flame2">🔥</div>
+              </div>
+              <div class="candle">
+                <div class="flame" id="flame3">🔥</div>
+              </div>
+            </div>
+            <div class="cake-top">🎂</div>
+            <div class="cake-body">
+              <span class="cake-text">Happy Birthday</span>
+              <span class="cake-name">♥ Ngân ♥</span>
+            </div>
+          </div>
+          <button class="blow-btn" id="blowBtn">🌬️ Thổi nến nào!</button>
+        </div>
+      </div>
+      <div class="birthday-message-card">
+        <div class="balloons">
+          <span class="balloon" style="--delay: 0s; --color: #ff6b8a">🎈</span>
+          <span class="balloon" style="--delay: 0.3s; --color: #ffd700">🎈</span>
+          <span class="balloon" style="--delay: 0.6s; --color: #ff8fa3">🎈</span>
+          <span class="balloon" style="--delay: 0.9s; --color: #ff69b4">🎈</span>
+        </div>
+        <h3>Pé Ngân ơi,</h3>
+        <p>Ngày 19/2 — ngày mà thế giới có thêm một thiên thần nhỏ, và cũng là ngày đặc biệt nhất với anh.
+          Anh luôn thầm cảm ơn vũ trụ vì đã mang em đến cuộc đời này, để anh có cơ hội gặp em, yêu thương em và trân
+          trọng em theo cách của riêng anh.
+          </br>
+          Từ khi có em, cuộc sống của anh như có thêm ánh sáng.
+          Em làm những ngày bình thường trở nên đặc biệt hơn, làm anh cười nhiều hơn và học được cách quan tâm một người
+          nhiều đến vậy.
+          Dù đôi lúc anh còn vụng về, lỡ làm em khó chịu hay tủi thân, nhưng tình cảm anh dành cho em thì chưa bao giờ
+          ít đi, chỉ ngày càng nhiều hơn thôi.
+          </br>
+          Anh chúc em tuổi mới luôn xinh đẹp, luôn tỏa sáng theo cách riêng của mình.
+          Chúc em thật nhiều sức khỏe, thật nhiều niềm vui, làm được mọi điều em mong muốn và lúc nào cũng được yêu
+          thương.
+          </br>
+          Hy vọng những sinh nhật sau này, anh đều có thể ở cạnh em, cùng em thổi nến, cắt bánh và ôm em một cái thật
+          chặt.
+          </br>
+          Sinh nhật vui vẻ nha, cô gái đặc biệt nhất của anh 🥳
+        </p>
+        <div class="birthday-sign">🎉 HBD Ngân 🎉</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 6: LOVE TIMELINE ==================== -->
+  <section id="timeline" class="section timeline-section">
+    <div class="section-header">
+      <h2 class="section-title">Hành Trình Yêu Thương</h2>
+      <p class="section-desc">Những khoảnh khắc đáng nhớ của chúng mình</p>
+    </div>
+    <div class="timeline-container">
+      <div class="timeline-line"></div>
+
+      <div class="timeline-item" data-side="left">
+        <div class="timeline-dot">💕</div>
+        <div class="timeline-card">
+          <div class="section-image-card birthday-image-card">
+            <img src="/images/b3170e2b3e25f67baf34.jpg" alt="Birthday Celebration" class="section-image" />
+            <div class="image-glow birthday-glow"></div>
+          </div>
+          <h4>Ngày đầu tiên</h4>
+          <p>
+            Khoảnh khắc đó, anh đã biết mình sẽ phải yêu em rất nhiều, một cô gái vừa dễ thương,
+            vừa đáng yêu, nhưng cũng “í ẹ”, nhõng nhẽo và hơi khó chiều một chút.
+          </p>
+          <p>Có lẽ ông trời sắp đặt để anh lại được gặp em,
+            để anh học cách quan tâm, học cách yêu,
+            và học cách chấp nhận luôn cả cái tính “í ẹ” đáng ghét mà cũng đáng yêu nhất trên đời của em.</p>
+          <p>Và đến bây giờ, anh chỉ muốn nói rằng:
+            Nếu được chọn lại từ đầu,
+            anh vẫn sẽ chọn gặp em, thích em, và yêu em như thế.</p>
+          <span class="timeline-date">Ngày ấy...</span>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-side="right">
+        <div class="timeline-dot">💝</div>
+        <div class="timeline-card">
+          <div class="section-image-card birthday-image-card">
+            <img src="/images/Screenshot 2023-10-14 123120.png" alt="Birthday Celebration" class="section-image" />
+            <div class="image-glow birthday-glow"></div>
+          </div>
+          <h4>Từng ngày bên nhau</h4>
+          <p>
+            Chúng mình đã cùng nhau tạo nên biết bao nhiêu kỷ niệm đẹp…
+            Những buổi nói chuyện thâu đêm,
+            những lần cười đến đau cả bụng,
+            những cái ôm bất chợt,
+            và cả những khoảnh khắc chỉ cần ngồi cạnh nhau thôi cũng thấy bình yên đến lạ.
+          </p>
+          <p>
+            Từng ngày trôi qua,
+            anh nhận ra tình yêu không phải lúc nào cũng toàn màu hồng.
+          </p>
+          <p>Đôi lúc mình cũng giận dỗi,
+            cũng hiểu lầm,
+            cũng có những ngày “không đẹp” một chút.
+            Nhưng chắc vì vậy mà tình yêu của mình mới thật hơn, sâu hơn và bền vững hơn… nhỉ?</p>
+          <p>Từng ngày…
+            anh quen với việc có em trong cuộc sống.
+            Quen với dòng tin nhắn của em ,
+            quen với việc nhớ em mà chẳng cần lý do.</p>
+          <p>Và anh nghĩ, điều hạnh phúc nhất không phải là những điều quá lớn lao,
+            mà chỉ đơn giản là:
+            mỗi ngày thức dậy, người bên cạnh anh vẫn là em.</p>
+          <span class="timeline-date">Từng ngày...</span>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-side="left">
+        <div class="timeline-dot">💗</div>
+        <div class="timeline-card">
+          <div class="section-image-card birthday-image-card">
+            <img src="/images/fe2b95a1baaf72f12bbe.jpg" alt="Birthday Celebration" class="section-image" />
+            <div class="image-glow birthday-glow"></div>
+          </div>
+          <h4>Valentine · Tết · Sinh nhật</h4>
+          <p>
+            Ba dịp đặc biệt liên tiếp — 14/2, 16/2, 19/2 — tất cả đều dành cho
+            Ngân!
+          </p>
+          <p>
+            Anh thấy buồn cười một chút,
+            sao mà mọi ngày quan trọng nhất trong năm
+            lại vô tình tụ lại quanh em như vậy.
+            Giống như cả thế giới cũng đang âm thầm nói với anh rằng:
+            “Tháng này, hãy yêu cô gái đó nhiều hơn đi.”
+          </p>
+          <p>
+            Valentine để anh nói lời yêu em.
+            Tết để anh chúc em một năm mới bình an, hạnh phúc.
+            Và sinh nhật… để cảm ơn vì em đã xuất hiện trên đời này.
+          </p>
+          <p>Ba dịp, nhưng chung một điều ước —
+            mong em luôn vui vẻ, luôn được yêu thương và luôn có anh bên cạnh.</p>
+          <p>Anh còn nghe nói…
+            3 năm nữa Valentine sẽ còn đặc biệt hơn nữa thì phải.
+            Nên từ bây giờ, anh phải cố gắng thật nhiều,
+            để đến ngày đó có thể mang đến cho em
+            một Valentine thật đáng nhớ, thật hạnh phúc,
+            một ngày mà em sẽ mỉm cười khi nghĩ lại:
+            “À, mình đã có một người yêu mình nhiều đến vậy.”</p>
+          <p>Vì với anh,
+            không phải ngày lễ làm nó trở nên đặc biệt…
+            mà là vì ngày đó có em.</p>
+          <span class="timeline-date">Tháng 2, 2026</span>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-side="right">
+        <div class="timeline-dot">💖</div>
+        <div class="timeline-card">
+          <div class="section-image-card birthday-image-card">
+            <img src="/images/z6248978762337_8996adb3236c4fea761c49ea9fd268f8.jpg" alt="Birthday Celebration"
+              class="section-image" />
+            <div class="image-glow birthday-glow"></div>
+          </div>
+          <h4>Tương lai</h4>
+          <p>Anh muốn cùng em viết tiếp câu chuyện tình yêu này… thật lâu, thật lâu nữa.
+            Không chỉ là vài tháng, vài năm,
+            mà là cả một hành trình dài phía trước.</p>
+          <p>
+            Anh muốn sau này,
+            vẫn là em đi bên cạnh anh,
+            cùng nhau ăn những bữa cơm đơn giản,
+            cùng nhau đi chơi những nơi mới,
+            cùng cười, cùng giận, cùng lớn lên với nhau từng ngày.
+          </p>
+          <p>Anh muốn mỗi kế hoạch trong tương lai của mình
+            đều có tên em ở trong đó.</p>
+          <p>Mà này…
+            đọc tới đây đừng có hiểu lầm nha pé.
+            Đây <strong>không phải cầu hôn đâu đó</strong>, đừng tưởng bở nha 😆</p>
+          <p>
+            Ghi tới đây anh mới giật mình nhớ ra…
+            mình yêu nhau vậy mà anh còn chưa tỏ tình đàng hoàng nữa.
+            Thôi thì pé đừng có giận anh nha… anh “thiếu bước” xíu thôi.
+          </p>
+          <p>Chắc để dành,
+            đợi tới lúc cầu hôn rồi bù lại một thể quá… kkkk.</p>
+          <p>Nhưng mà nói chứ,
+            dù chưa nói lời tỏ tình chính thức,
+            thì từng ngày anh ở bên em, từng sự quan tâm, từng cái ôm,
+            đều thay cho câu “anh yêu em” rồi.</p>
+          <p>
+            Anh vẫn hy vọng người nắm tay anh
+            vẫn là em,
+            người anh thương nhất,
+            cô bé “í ẹ” nhưng đáng yêu nhất trên đời.
+          </p>
+          <span class="timeline-date">Và mãi về sau...</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 7: PHOTO BOOTH ==================== -->
+  <section id="photoBooth" class="section photobooth-section">
+    <div class="section-header">
+      <h2 class="section-title">📸 Khoảnh Khắc Của Mình</h2>
+      <p class="section-desc">Chụp ảnh kỷ niệm như photo booth thật nào!</p>
+    </div>
+    <div class="photobooth-content">
+      <!-- Step 1: Settings -->
+      <div class="pb-settings" id="pbSettings">
+        <div class="pb-setting-group">
+          <label class="pb-label">Số ảnh chụp</label>
+          <div class="pb-mode-selector" id="modeSelector">
+            <button class="pb-mode-btn active" data-shots="1">1 ảnh</button>
+            <button class="pb-mode-btn" data-shots="4">4 ảnh</button>
+            <button class="pb-mode-btn" data-shots="8">8 ảnh</button>
+          </div>
+        </div>
+        <div class="pb-setting-group">
+          <label class="pb-label">Khung trang trí</label>
+          <div class="pb-strip-frames" id="stripFrameSelector">
+            <button class="pb-strip-frame active" data-strip="pink" title="Hồng tình yêu">
+              <span class="strip-preview" style="background: linear-gradient(135deg, #ffe0ec, #ffb3c6)">💕</span>
+            </button>
+            <button class="pb-strip-frame" data-strip="gold" title="Vàng sang trọng">
+              <span class="strip-preview" style="background: linear-gradient(135deg, #fff8e1, #ffd54f)">✨</span>
+            </button>
+            <button class="pb-strip-frame" data-strip="blue" title="Xanh dịu dàng">
+              <span class="strip-preview" style="background: linear-gradient(135deg, #e3f2fd, #90caf9)">�</span>
+            </button>
+            <button class="pb-strip-frame" data-strip="classic" title="Trắng cổ điển">
+              <span class="strip-preview" style="background: linear-gradient(135deg, #fafafa, #e0e0e0)">🤍</span>
+            </button>
+          </div>
+          <div class="strip-frame-preview-wrap" id="stripFramePreview">
+            <canvas id="stripPreviewCanvas"></canvas>
+          </div>
+        </div>
+        <div class="pb-setting-group">
+          <label class="pb-label">Overlay camera</label>
+          <div class="frame-selector" id="frameSelector">
+            <button class="frame-option active" data-frame="hearts" title="Trái tim">
+              💕
+            </button>
+            <button class="frame-option" data-frame="flowers" title="Hoa">
+              🌸
+            </button>
+            <button class="frame-option" data-frame="stars" title="Ngôi sao">
+              ✨
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Camera View -->
+      <div class="camera-container" id="cameraContainer">
+        <div class="camera-frame">
+          <div class="frame-corner frame-tl"></div>
+          <div class="frame-corner frame-tr"></div>
+          <div class="frame-corner frame-bl"></div>
+          <div class="frame-corner frame-br"></div>
+          <!-- <div class="frame-label">Anh ❤️ Ngân</div> -->
+          <video id="cameraVideo" autoplay playsinline></video>
+          <canvas id="cameraOverlay"></canvas>
+          <!-- Countdown Overlay -->
+          <div class="countdown-overlay" id="countdownOverlay">
+            <div class="countdown-ring">
+              <svg viewBox="0 0 120 120">
+                <circle cx="60" cy="60" r="54" class="countdown-ring-bg" />
+                <circle cx="60" cy="60" r="54" class="countdown-ring-fill" id="countdownRing" />
+              </svg>
+              <span class="countdown-number" id="countdownNumber">3</span>
+            </div>
+            <div class="countdown-label" id="countdownLabel">Chuẩn bị!</div>
+          </div>
+          <!-- Shot progress -->
+          <div class="shot-progress" id="shotProgress">
+            <span id="shotProgressText">Ảnh 1/4</span>
+          </div>
+          <div class="camera-placeholder" id="cameraPlaceholder">
+            <span class="camera-placeholder-icon">📷</span>
+            <p>Nhấn bên dưới để mở camera</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="photobooth-controls">
+        <button class="photobooth-btn" id="startCameraBtn">
+          📷 Mở Camera
         </button>
-        <div class="finale-events">
-          <span>💝 Valentine 14/2</span>
-          <span>🏮 Giao Thừa 16/2</span>
-          <span>🎂 Sinh nhật 19/2</span>
+        <button class="photobooth-btn capture-btn" id="captureBtn" disabled>
+          📸 Bắt đầu chụp!
+        </button>
+      </div>
+
+      <!-- Result: Photo Strip Preview -->
+      <div class="pb-result" id="pbResult">
+        <h3 class="pb-result-title">🖼️ Dãy ảnh của mình!</h3>
+        <div class="pb-strip-preview-area" id="stripPreviewArea">
+          <!-- Generated strip canvas will appear here -->
+        </div>
+        <div class="pb-result-actions">
+          <button class="photobooth-btn" id="downloadStripBtn">
+            📥 Tải ảnh về
+          </button>
+          <button class="photobooth-btn pb-retake-btn" id="retakeBtn">
+            🔄 Chụp lại
+          </button>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Navigation Dots -->
-    <nav class="nav-dots" id="navDots">
-      <button
-        class="nav-dot active"
-        data-section="intro"
-        aria-label="Intro"
-        title="Mở đầu"></button>
-      <button
-        class="nav-dot"
-        data-section="valentine"
-        aria-label="Valentine"
-        title="Valentine"></button>
-      <button
-        class="nav-dot"
-        data-section="loveLetter"
-        aria-label="Love Letter"
-        title="Thư tình"></button>
-      <button
-        class="nav-dot"
-        data-section="giaoThua"
-        aria-label="Giao Thừa"
-        title="Giao Thừa"></button>
-      <button
-        class="nav-dot"
-        data-section="birthday"
-        aria-label="Birthday"
-        title="Sinh nhật"></button>
-      <button
-        class="nav-dot"
-        data-section="timeline"
-        aria-label="Timeline"
-        title="Hành trình"></button>
-      <button
-        class="nav-dot"
-        data-section="photoBooth"
-        aria-label="Photo Booth"
-        title="Chụp ảnh"></button>
-      <button
-        class="nav-dot"
-        data-section="wishes"
-        aria-label="Wishes"
-        title="Điều ước"></button>
-      <button
-        class="nav-dot"
-        data-section="finale"
-        aria-label="Finale"
-        title="Kết"></button>
-    </nav>
+  <!-- ==================== SECTION 8: INTERACTIVE WISHES ==================== -->
+  <section id="wishes" class="section wishes-section">
+    <div class="section-header">
+      <h2 class="section-title">Điều Ước Cho Ngân</h2>
+      <p class="section-desc">Chạm vào những ngôi sao để nhận lời yêu 🌟</p>
+      <div class="section-image-card birthday-image-card" style="margin: 12px auto">
+        <img src="/images/z3783986022061_42cc76ab7b28c446a4b8caf964e04f4b.jpg" alt="Birthday Celebration"
+          class="section-image" />
+        <div class="image-glow birthday-glow"></div>
+      </div>
+    </div>
+    <div class="stars-container" id="starsContainer">
+      <div class="star-item" data-wish="Ngân là cả thế giới của anh.
+      Chỉ cần có em, mọi thứ còn lại đều trở nên đủ đầy 🌍💕">
+        <div class="star-glow"></div>
+        <span class="star-emoji">⭐</span>
+      </div>
+      <div class="star-item" data-wish="Mỗi giây phút bên Milk, với anh, đều là một điều hạnh phúc nhỏ bé ✨">
+        <div class="star-glow"></div>
+        <span class="star-emoji">🌟</span>
+      </div>
+      <div class="star-item" data-wish="Dù thời gian có trôi bao lâu, anh vẫn sẽ luôn yêu Boo như vậy 💖">
+        <div class="star-glow"></div>
+        <span class="star-emoji">💫</span>
+      </div>
+      <div class="star-item" data-wish="Pé Ngân là giấc mơ đẹp nhất… mà anh may mắn có được ngoài đời thật 🌙💕">
+        <div class="star-glow"></div>
+        <span class="star-emoji">✨</span>
+      </div>
+      <div class="star-item" data-wish="Không phải anh hoàn hảo,
+      chỉ là bên em, mọi thứ đều trở nên trọn vẹn 💕">
+        <div class="star-glow"></div>
+        <span class="star-emoji">🌠</span>
+      </div>
+      <div class="star-item" data-wish="Forever yêu Ngân 💞">
+        <div class="star-glow"></div>
+        <span class="star-emoji">⭐</span>
+      </div>
+    </div>
+    <div class="wish-display" id="wishDisplay">
+      <p class="wish-text" id="wishText">Chạm vào ngôi sao...</p>
+    </div>
+  </section>
 
-    <script src="script.js"></script>
-  </body>
+  <!-- ==================== SECTION 9: FIREWORKS FINALE ==================== -->
+  <section id="finale" class="section finale-section">
+    <canvas id="fireworksCanvas"></canvas>
+    <div class="finale-content">
+      <h2 class="finale-title">
+        <span>Anh</span>
+        <span class="finale-heart">❤️</span>
+        <span>em</span>
+      </h2>
+      <p class="finale-message">Forever & Always · Mãi mãi bên nhau</p>
+      <button id="fireworkBtn" class="firework-btn">
+        🎆 Bắn pháo hoa tình yêu 🎆
+      </button>
+      <div class="finale-events">
+        <span>💝 Valentine 14/2</span>
+        <span>🏮 Giao Thừa 16/2</span>
+        <span>🎂 Sinh nhật 19/2</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interaction hints (gesture, keyboard, shake) -->
+  <div class="interaction-hints" id="interactionHints" role="status" aria-live="polite">
+    <span class="hint-text">✨ M = nhạc</span>
+    <button type="button" class="hint-dismiss" id="hintDismiss" aria-label="Đóng gợi ý">×</button>
+  </div>
+
+  <!-- Navigation Dots -->
+  <nav class="nav-dots" id="navDots">
+    <button class="nav-dot active" data-section="intro" aria-label="Intro" title="Mở đầu"></button>
+    <button class="nav-dot" data-section="valentine" aria-label="Valentine" title="Valentine"></button>
+    <button class="nav-dot" data-section="loveLetter" aria-label="Love Letter" title="Thư tình"></button>
+    <button class="nav-dot" data-section="giaoThua" aria-label="Giao Thừa" title="Giao Thừa"></button>
+    <button class="nav-dot" data-section="birthday" aria-label="Birthday" title="Sinh nhật"></button>
+    <button class="nav-dot" data-section="timeline" aria-label="Timeline" title="Hành trình"></button>
+    <button class="nav-dot" data-section="photoBooth" aria-label="Photo Booth" title="Chụp ảnh"></button>
+    <button class="nav-dot" data-section="wishes" aria-label="Wishes" title="Điều ước"></button>
+    <button class="nav-dot" data-section="finale" aria-label="Finale" title="Kết"></button>
+  </nav>
+  <!-- Three.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="script.js"></script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
+</body>
+
 </html>
