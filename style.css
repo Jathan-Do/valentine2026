@@ -2445,6 +2445,9 @@ body {
   .interaction-hints {
     width: 300px !important;
   }
+  .pb-strip-preview-area canvas {
+    height: 400px !important;
+  }
 }
 
 /* ===== CUSTOM SCROLLBAR ===== */
