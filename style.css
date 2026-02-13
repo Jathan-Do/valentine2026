@@ -2443,7 +2443,7 @@ body {
     font-size: 1.1rem;
   }
   .interaction-hints {
-    width: 300px !important;
+    width: 280px !important;
   }
 }
 
@@ -2546,6 +2546,7 @@ body {
   cursor: pointer;
   transition: var(--transition);
 }
+
 
 .hint-toggle.visible {
   display: flex;
