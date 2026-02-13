@@ -1662,7 +1662,7 @@ document.addEventListener("DOMContentLoaded", () => {
       // Update button
       setTimeout(
         () => {
-          blowBtn.textContent = "🎉 Chúc mừng sinh nhật Ngân! 🎉";
+          blowBtn.textContent = "🎉 Chúc mừng sinh nhật em Ngân iu! 🎉";
           blowBtn.classList.add("blown");
         },
         flames.length * 300 + 200,
