@@ -1,5 +1,5 @@
 {
     "routes": [
-      { "src": "/", "dest": "/03-2026/index.html" }
+      { "src": "/", "dest": "/02-2026/index.html" }
     ]
   }
