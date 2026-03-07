@@ -407,7 +407,11 @@ document.addEventListener("DOMContentLoaded", () => {
         wdCardFlip?.click();
       } else if (/cào thẻ|cào the|cao the|scratch/.test(text)) {
         handled = true;
-        document.getElementById("scratchSection")?.scrollIntoView({ behavior: "smooth" });
+        const scratchEl = document.getElementById("scratchSection");
+        scratchEl?.scrollIntoView({ behavior: "smooth" });
+        setTimeout(() => {
+          if (typeof window.wdAutoScratch === "function") window.wdAutoScratch();
+        }, 600);
       } else if (/tiếp|xuống|next/.test(text)) {
         handled = true;
         goToWdSection("next");
@@ -596,13 +600,30 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       { passive: true },
     );
-    window.addEventListener(
-      "touchend",
-      () => {
-        scratching = false;
-      },
-      { passive: true },
-    );
+
+    function autoScratch() {
+      const w = scratchCanvas.width;
+      const h = scratchCanvas.height;
+      const radius = 28;
+      let count = 0;
+      const total = 55;
+      function step() {
+        for (let n = 0; n < 4 && count < total; n++) {
+          const x = radius + Math.random() * (w - radius * 2);
+          const y = radius + Math.random() * (h - radius * 2);
+          ctx.beginPath();
+          ctx.arc(x, y, radius, 0, Math.PI * 2);
+          ctx.fill();
+          count++;
+        }
+        if (count < total) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    const scratchAutoBtn = document.getElementById("wdScratchAutoBtn");
+    if (scratchAutoBtn) scratchAutoBtn.addEventListener("click", autoScratch);
+    window.wdAutoScratch = autoScratch;
   }
 
   // ===== BLOOMING ROSE =====
