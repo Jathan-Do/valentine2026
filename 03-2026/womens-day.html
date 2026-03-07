@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chúc Mừng Ngày 8/3</title>
+  <meta name="description" content="Ngày Quốc Tế Phụ Nữ 8/3 — Dành riêng cho Trần Kim Ngân" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="icon" type="image/x-icon" href="/images/792174.png" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Quicksand:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="/03-2026/womens-day.css" />
+  <link rel="stylesheet" href="/02-2026/style.css" />
+</head>
+
+<body class="wd-body">
+  <!-- Falling Petals Canvas -->
+  <canvas id="petalsCanvas"></canvas>
+
+  <nav class="event-menu event-menu-vertical" id="wdEventMenu" aria-hidden="true">
+    <span class="event-menu-group">Tháng 2/2026</span>
+    <a class="event-menu-item" href="/02-2026/index.html#valentine">
+      <span class="event-menu-icon">💝</span>
+      <span class="event-menu-label">14/02 · Valentine</span>
+    </a>
+    <a class="event-menu-item" href="/02-2026/index.html#giaoThua">
+      <span class="event-menu-icon">🏮</span>
+      <span class="event-menu-label">16/02 · Giao Thừa</span>
+    </a>
+    <a class="event-menu-item" href="/02-2026/index.html#birthday">
+      <span class="event-menu-icon">🎂</span>
+      <span class="event-menu-label">19/02 · Sinh nhật</span>
+    </a>
+    <span class="event-menu-group">Tháng 3/2026</span>
+    <span class="event-menu-item wd-active">
+      <span class="event-menu-icon">🌸</span>
+      <span class="event-menu-label">08/03 · Ngày của Em</span>
+    </span>
+  </nav>
+
+  <!-- Music -->
+  <audio id="wdMusic" loop>
+    <source src="/audio/Low G ｜ In Love (ft. JustaTee) ｜ ‘L2K’ The Album - Low G.mp3" type="audio/mpeg" />
+  </audio>
+
+  <!-- Music Toggle -->
+  <button id="wdMusicToggle" class="music-btn" aria-label="Toggle Music">
+    <span class="music-icon">🎵</span>
+    <span class="music-wave">
+      <span></span><span></span><span></span><span></span>
+    </span>
+  </button>
+
+  <!-- Voice Control Toggle -->
+  <button id="wdVoiceToggle" class="voice-btn" aria-label="Bật điều khiển giọng nói">
+    <span class="voice-icon">🎙️</span>
+  </button>
+  <div id="wdVoiceStatus" class="voice-status" aria-live="polite"></div>
+
+  <!-- Menu Toggle (ẩn/hiện menu, ngay dưới micro) -->
+  <button id="wdEventMenuToggle" class="event-menu-toggle" aria-label="Mở/đóng menu" aria-expanded="false">
+    <span class="event-menu-toggle-icon">☰</span>
+  </button>
+
+  <!-- ==================== EVENT MENU BAR (dọc, ẩn/hiện) ==================== -->
+  <section class="wd-hero" id="wdHero">
+    <div class="wd-hero-content">
+      <div class="wd-badge-big">08/03</div>
+      <h1 class="wd-hero-title">
+        <span class="wd-title-line">Ngày Của Em</span>
+        <span class="wd-title-accent">Ngân yêu 🌸</span>
+      </h1>
+      <p class="wd-hero-sub">
+        Ngày Quốc Tế Phụ Nữ — Dành riêng cho cô gái đặc biệt nhất
+      </p>
+      <button class="wd-enter-btn" id="wdEnterBtn">
+        <span>🌹 Khám phá bất ngờ 🌹</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- Tips -->
+  <div class="interaction-hints" id="wdInteractionHints" role="status" aria-live="polite">
+    <span class="hint-text">
+      <span style="font-size: 1.05em">✨ <strong>Tips 8/3:</strong></span><br />
+      <span>• <kbd>M</kbd> – Mở/Tắt Nhạc</span>
+      <br />
+      <span>• <strong>Nhấn</strong> <kbd>🎵</kbd> – Mở/Tắt Nhạc</span>
+      <br />
+      <span>• <kbd>←</kbd> <kbd>→</kbd> hoặc <kbd>↑</kbd> <kbd>↓</kbd> hoặc
+        <kbd>Space</kbd> – Chuyển nhanh giữa các phần</span><br />
+      <span>• <strong>Nhấn</strong> <kbd>🎙️</kbd> – Bật điều khiển giọng nói (ví dụ: <em>“mở quà”, “cào thẻ”, “hoa nở”,
+          “mở thiệp”, “mở nhạc | bật nhạc | play”,</br> “tắt nhạc | dừng nhạc | pause”, “next | xuống | tiếp”, “lên |
+          quay lại | back”</em>)</span>
+      <br><span>• <strong>Nhấn</strong> <kbd>?</kbd> – Hiện lại tips sử dụng</span>
+      <br>
+      <span>• <strong>Nhấn</strong> <kbd>▶</kbd> – Tự động chạy qua các section</span>
+    </span>
+    <button type="button" class="hint-dismiss" id="wdHintDismiss" aria-label="Đóng gợi ý">
+      ×
+    </button>
+  </div>
+  <button id="wdHintToggle" class="hint-toggle" aria-label="Hiện lại tips sử dụng">
+    ?
+  </button>
+  <button id="wdAutoTourToggle" class="auto-tour-btn" aria-label="Tự chạy qua các phần">
+    ▶
+  </button>
+
+  <!-- Nav dots for 8/3 -->
+  <nav class="nav-dots" id="wdNavDots">
+    <button class="nav-dot active" data-section="wdHero" aria-label="Hero" title="Mở đầu"></button>
+    <button class="nav-dot" data-section="giftSection" aria-label="Gift" title="Mở quà"></button>
+    <button class="nav-dot" data-section="scratchSection" aria-label="Scratch" title="Cào thẻ"></button>
+    <button class="nav-dot" data-section="bloomSection" aria-label="Bloom" title="Hoa nở"></button>
+    <button class="nav-dot" data-section="typewriterSection" aria-label="Typewriter" title="Lời nhắn"></button>
+    <button class="nav-dot" data-section="cardSection" aria-label="Card" title="Thiệp"></button>
+  </nav>
+
+  <!-- ==================== SECTION 1: GIFT BOX ==================== -->
+  <section class="wd-section" id="giftSection">
+    <div class="wd-section-header">
+      <h2>🎁 Mở quà nào!</h2>
+      <p>Nhấn vào hộp quà để xem bất ngờ bên trong</p>
+    </div>
+    <div class="wd-gift-box" id="wdGiftBox">
+      <div class="gift-lid" id="giftLid">
+        <div class="gift-bow">🎀</div>
+      </div>
+      <div class="gift-body">
+        <div class="gift-pattern"></div>
+      </div>
+      <div class="gift-content" id="giftContent">
+        <span class="gift-flower">🌹</span>
+        <span class="gift-flower">🌷</span>
+        <span class="gift-flower">🌸</span>
+        <span class="gift-flower">🌺</span>
+        <span class="gift-flower">💐</span>
+      </div>
+      <p class="gift-hint" id="giftHint">Nhấn để mở quà 🎁</p>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 2: SCRATCH CARD ==================== -->
+  <section class="wd-section" id="scratchSection">
+    <div class="wd-section-header">
+      <h2>🎴 Cào thẻ may mắn</h2>
+      <p>Dùng chuột hoặc ngón tay cào để lộ lời chúc bí mật</p>
+    </div>
+    <div class="scratch-card-container">
+      <div class="scratch-card" id="scratchCard">
+        <div class="scratch-message" id="scratchMessage">
+          <span class="scratch-emoji">💖</span>
+          <p class="scratch-text" id="scratchText"><!-- random lời chúc khi load --></p>
+          <span class="scratch-emoji">💖</span>
+        </div>
+        <canvas class="scratch-overlay" id="scratchCanvas"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 3: BLOOM ROSE ==================== -->
+  <section class="wd-section" id="bloomSection">
+    <div class="wd-section-header">
+      <h2>🌹 Hoa nở cho em</h2>
+      <p>Nhấn nút để xem bông hồng nở dành tặng em</p>
+    </div>
+    <div class="bloom-stage">
+      <div class="bloom-rose" id="bloomRose">
+        <div class="bloom-stem"></div>
+        <div class="petal p1"></div>
+        <div class="petal p2"></div>
+        <div class="petal p3"></div>
+        <div class="petal p4"></div>
+        <div class="petal p5"></div>
+        <div class="petal p6"></div>
+        <div class="petal p7"></div>
+        <div class="petal p8"></div>
+        <div class="bloom-center"></div>
+      </div>
+      <button class="bloom-btn" id="bloomBtn">🌱 Nhấn để hoa nở</button>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 4: TYPEWRITER MESSAGE ==================== -->
+  <section class="wd-section" id="typewriterSection">
+    <div class="wd-section-header">
+      <h2>✍️ Lời nhắn từ anh</h2>
+    </div>
+    <div class="typewriter-card">
+      <div class="tw-deco">🌸 ✨ 🌹 ✨ 🌸</div>
+      <p class="typewriter-text" id="typewriterText"></p>
+      <div class="tw-cursor" id="twCursor">|</div>
+      <div class="tw-sign">— Người yêu em mãi —</div>
+    </div>
+  </section>
+
+  <!-- ==================== SECTION 5: GREETING CARD ==================== -->
+  <section class="wd-section" id="cardSection">
+    <div class="wd-section-header">
+      <h2>💌 Thiệp chúc mừng</h2>
+    </div>
+    <div class="wd-card-flip" id="wdCardFlip">
+      <div class="wd-card-inner">
+        <div class="wd-card-front">
+          <div class="card-front-deco">
+            <span class="cfd-flower cfd-1">🌸</span>
+            <span class="cfd-flower cfd-2">🌹</span>
+            <span class="cfd-flower cfd-3">🌷</span>
+            <span class="cfd-flower cfd-4">🌺</span>
+          </div>
+          <h3>Happy Women's Day</h3>
+          <p>Chúc Mừng Ngày 8/3</p>
+          <span class="card-tap">Nhấn để mở thiệp</span>
+        </div>
+        <div class="wd-card-back">
+          <p class="wd-card-message">
+            Gửi em pé iuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu,<br /><br />
+
+            Nhân ngày 8/3, anh chỉ muốn nói với em rằng: ..................<br /><br />
+
+            Với anh, em là người phụ nữ mà anh ngưỡng mộ nhất.
+            Mạnh mẽ, kiên cường nhưng cũng rất ấm áp và ngọt ngào.
+            Anh luôn cảm thấy thật may mắn và tự hào khi có em bên cạnh.<br /><br />
+
+            Thật sự là hết văn, hết chữ rồi, =)))))) 💕
+          </p>
+          <div class="wd-card-sign">— Anh yêu em —</div>
+          <div class="wd-card-footer">🌷 Happy Women's Day 🌷</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="wd-footer">
+    <p>💕 Made with love for Trần Kim Ngân 💕</p>
+    <a href="/02-2026/index.html" class="wd-back-link">← Quay về trang chính</a>
+  </footer>
+
+  <script src="/03-2026/womens-day.js"></script>
+</body>
+
+</html>

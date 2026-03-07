@@ -104,7 +104,6 @@ body {
   box-shadow: 0 4px 15px rgba(232, 69, 107, 0.4);
 }
 
-
 /* ===== MUSIC BUTTON ===== */
 .music-btn {
   position: fixed;
@@ -178,7 +177,9 @@ body {
   opacity: 0;
   transform: translateY(6px);
   pointer-events: none;
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
   z-index: 1000;
 }
 
@@ -597,9 +598,9 @@ body {
   font-size: 1rem;
   color: #6b2040;
   margin-bottom: 20px;
-  overflow: scroll;
+  overflow: auto;
   max-height: 500px;
-  scrollbar-width: none;
+  /* scrollbar-width: none; */
 }
 
 .card-back-content .highlight {
@@ -1345,7 +1346,6 @@ body {
   box-shadow: 0 15px 40px rgba(232, 69, 107, 0.2);
   border-color: rgba(232, 69, 107, 0.3);
 }
-
 
 .timeline-card h4 {
   font-family: var(--font-heading);
@@ -2358,9 +2358,14 @@ body {
   padding: 6px 10px;
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.08);
-  transition: transform 0.2s, background 0.2s;
+  transition:
+    transform 0.2s,
+    background 0.2s;
 }
-.pb-sticker-btn:hover { transform: scale(1.15); background: rgba(232, 69, 107, 0.25); }
+.pb-sticker-btn:hover {
+  transform: scale(1.15);
+  background: rgba(232, 69, 107, 0.25);
+}
 .pb-strip-preview-area {
   position: relative;
   display: flex;
@@ -2481,7 +2486,10 @@ body {
   z-index: 9990;
   font-size: 0.7rem;
   color: rgba(255, 255, 255, 0.85);
-  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease,
+    visibility 0.4s ease;
 }
 
 .interaction-hints.dismissed {
@@ -2523,8 +2531,12 @@ body {
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .hint-toggle {
@@ -2546,7 +2558,6 @@ body {
   cursor: pointer;
   transition: var(--transition);
 }
-
 
 .hint-toggle.visible {
   display: flex;
@@ -2589,4 +2600,550 @@ body {
 .auto-tour-btn.active {
   background: rgba(232, 69, 107, 0.9);
   border-color: rgba(255, 255, 255, 0.7);
+}
+
+/* =============================================================
+   EVENT MENU BAR (vertical, hideable)
+   ============================================================= */
+.event-menu-toggle {
+  position: fixed;
+  top: 140px;
+  right: 20px;
+  z-index: 1001;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 107, 138, 0.3);
+  background: rgba(232, 69, 107, 0.2);
+  backdrop-filter: blur(10px);
+  color: rgba(255, 255, 255, 0.9);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+.event-menu-toggle:hover {
+  background: rgba(232, 69, 107, 0.4);
+  transform: scale(1.1);
+  box-shadow: 0 0 20px rgba(232, 69, 107, 0.4);
+}
+.event-menu-toggle[aria-expanded="true"] {
+  background: rgba(232, 69, 107, 0.5);
+  box-shadow: 0 0 16px rgba(232, 69, 107, 0.5);
+}
+.event-menu-toggle-icon {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.event-menu {
+  position: fixed;
+  top: 198px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 12px 10px;
+  min-width: 200px;
+  max-height: min(70vh, 400px);
+  overflow-y: auto;
+  background: rgba(15, 5, 20, 0.92);
+  backdrop-filter: blur(16px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  z-index: 1000;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  pointer-events: none;
+}
+.event-menu.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.event-menu.event-menu-vertical .event-menu-group {
+  margin-top: 6px;
+  margin-bottom: 2px;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  border-radius: 8px;
+}
+.event-menu.event-menu-vertical .event-menu-group:first-child {
+  margin-top: 0;
+}
+.event-menu.event-menu-vertical .event-menu-item {
+  padding: 10px 14px;
+  border-radius: 12px;
+  justify-content: flex-start;
+}
+.event-menu.event-menu-vertical .event-menu-label {
+  display: inline;
+}
+
+.event-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: var(--transition);
+  text-decoration: none;
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.event-menu-title {
+  cursor: default;
+  opacity: 0.9;
+}
+
+.event-menu-group {
+  cursor: default;
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+
+.event-menu-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  transform: translateY(-1px);
+}
+
+.event-menu-item.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+  box-shadow: 0 2px 12px rgba(232, 69, 107, 0.4);
+}
+.event-menu-item.wd-active {
+  background: linear-gradient(135deg, #d946a8, #9333ea);
+  color: white;
+  box-shadow: 0 2px 12px rgba(217, 70, 168, 0.4);
+  animation: wdMenuPulse 2s ease-in-out infinite;
+}
+
+.event-menu-icon {
+  font-size: 1.1rem;
+}
+
+.event-menu-label {
+  display: inline;
+}
+
+@keyframes wdMenuPulse {
+  0%,
+  100% {
+    box-shadow: 0 2px 12px rgba(217, 70, 168, 0.4);
+  }
+  50% {
+    box-shadow: 0 2px 20px rgba(217, 70, 168, 0.7);
+  }
+}
+
+@media (max-width: 600px) {
+  .event-menu-toggle {
+    top: 130px;
+    right: 16px;
+    width: 46px;
+    height: 46px;
+  }
+  .event-menu {
+    top: 184px;
+    right: 16px;
+    min-width: 180px;
+    padding: 10px 8px;
+  }
+  .event-menu-item {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+/* =============================================================
+   SECTION: WOMEN'S DAY 8/3
+   ============================================================= */
+.womens-day-section {
+  background: linear-gradient(
+    180deg,
+    rgba(147, 51, 234, 0.08) 0%,
+    rgba(217, 70, 168, 0.12) 50%,
+    rgba(15, 5, 20, 0) 100%
+  );
+}
+
+.wd-badge {
+  background: linear-gradient(135deg, #d946a8, #9333ea) !important;
+  box-shadow: 0 0 20px rgba(217, 70, 168, 0.4) !important;
+}
+
+.wd-layout {
+  display: flex;
+  gap: 40px;
+  width: 100%;
+  max-width: 900px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* ===== GIFT BOX ===== */
+.wd-gift-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  flex: 1;
+  min-width: 280px;
+}
+
+.wd-gift-box {
+  position: relative;
+  width: 220px;
+  height: 180px;
+  cursor: pointer;
+  perspective: 600px;
+}
+
+.gift-body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 130px;
+  background: linear-gradient(135deg, #d946a8, #e879c0);
+  border-radius: 12px;
+  box-shadow: 0 8px 30px rgba(217, 70, 168, 0.3);
+  overflow: hidden;
+}
+
+.gift-pattern {
+  width: 100%;
+  height: 100%;
+  background:
+    linear-gradient(
+      90deg,
+      transparent 48%,
+      rgba(255, 255, 255, 0.25) 48%,
+      rgba(255, 255, 255, 0.25) 52%,
+      transparent 52%
+    ),
+    linear-gradient(
+      0deg,
+      transparent 48%,
+      rgba(255, 255, 255, 0.25) 48%,
+      rgba(255, 255, 255, 0.25) 52%,
+      transparent 52%
+    );
+}
+
+.gift-lid {
+  position: absolute;
+  top: 20px;
+  left: -8px;
+  width: calc(100% + 16px);
+  height: 45px;
+  background: linear-gradient(135deg, #e054b5, #c940aa);
+  border-radius: 8px;
+  z-index: 2;
+  transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: left bottom;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.gift-bow {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2.5rem;
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.2));
+}
+
+.wd-gift-box.opened .gift-lid {
+  transform: rotate(-110deg) translateY(-20px);
+}
+
+.gift-content {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 3;
+  transition: opacity 0.4s ease 0.3s;
+}
+
+.wd-gift-box.opened .gift-content {
+  opacity: 1;
+}
+
+.gift-flower {
+  font-size: 1.8rem;
+  animation: flowerPop 0.6s ease forwards;
+  animation-play-state: paused;
+  opacity: 0;
+  transform: translateY(20px) scale(0.3);
+}
+
+.wd-gift-box.opened .gift-flower {
+  animation-play-state: running;
+}
+
+.gift-flower:nth-child(1) {
+  animation-delay: 0.3s;
+}
+.gift-flower:nth-child(2) {
+  animation-delay: 0.45s;
+}
+.gift-flower:nth-child(3) {
+  animation-delay: 0.6s;
+}
+.gift-flower:nth-child(4) {
+  animation-delay: 0.75s;
+}
+.gift-flower:nth-child(5) {
+  animation-delay: 0.9s;
+}
+
+@keyframes flowerPop {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.3);
+  }
+  60% {
+    opacity: 1;
+    transform: translateY(-30px) scale(1.2);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-15px) scale(1);
+  }
+}
+
+.gift-hint {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 12px;
+  transition: opacity 0.3s ease;
+}
+
+.wd-gift-box.opened + .wd-bouquet ~ .gift-hint,
+.wd-gift-box.opened .gift-hint {
+  opacity: 1;
+}
+
+/* ===== ANIMATED BOUQUET ===== */
+.wd-bouquet {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transform: scale(0.5) translateY(30px);
+  transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.wd-bouquet.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.bouquet-wrap {
+  display: flex;
+  gap: 2px;
+  font-size: 2.2rem;
+  filter: drop-shadow(0 4px 12px rgba(217, 70, 168, 0.3));
+}
+
+.bouquet-flower {
+  display: inline-block;
+  animation: bouquetSway 3s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.bf-1 {
+  animation-delay: 0s;
+}
+.bf-2 {
+  animation-delay: 0.3s;
+}
+.bf-3 {
+  animation-delay: 0.6s;
+}
+.bf-4 {
+  animation-delay: 0.9s;
+}
+.bf-5 {
+  animation-delay: 1.2s;
+}
+.bf-6 {
+  animation-delay: 1.5s;
+}
+.bf-7 {
+  animation-delay: 1.8s;
+}
+
+@keyframes bouquetSway {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(5deg);
+  }
+  75% {
+    transform: rotate(-5deg);
+  }
+}
+
+.bouquet-ribbon {
+  font-size: 2rem;
+  margin-top: -8px;
+  animation: ribbonPulse 2s ease-in-out infinite;
+}
+
+@keyframes ribbonPulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+/* ===== GREETING CARD ===== */
+.wd-card {
+  flex: 1;
+  min-width: 300px;
+  max-width: 450px;
+  padding: 30px;
+  background: linear-gradient(
+    145deg,
+    rgba(217, 70, 168, 0.1),
+    rgba(147, 51, 234, 0.08)
+  );
+  border: 1px solid rgba(217, 70, 168, 0.2);
+  border-radius: 20px;
+  box-shadow:
+    0 8px 32px rgba(217, 70, 168, 0.1),
+    inset 0 0 60px rgba(147, 51, 234, 0.03);
+}
+
+.wd-card-deco {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  animation: decoFloat 4s ease-in-out infinite;
+}
+
+@keyframes decoFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.wd-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.8rem;
+  color: #d946a8;
+  text-align: center;
+  margin-bottom: 18px;
+  text-shadow: 0 0 20px rgba(217, 70, 168, 0.3);
+}
+
+.wd-card-message {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+}
+
+.wd-card-sign {
+  text-align: center;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  color: var(--accent-gold);
+  margin-bottom: 15px;
+}
+
+.wd-card-footer {
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: #d946a8;
+  font-weight: 600;
+  padding-top: 12px;
+  border-top: 1px solid rgba(217, 70, 168, 0.15);
+}
+
+/* ===== FLOWER CONFETTI ANIMATION ===== */
+@keyframes flowerConfetti {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) rotate(0deg) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--tx), var(--ty)) rotate(720deg) scale(0.3);
+  }
+}
+
+.flower-confetti {
+  position: fixed;
+  font-size: 1.5rem;
+  pointer-events: none;
+  z-index: 9999;
+  animation: flowerConfetti var(--duration) ease-out forwards;
+}
+
+/* ===== RESPONSIVE FOR WOMEN'S DAY ===== */
+@media (max-width: 768px) {
+  .wd-layout {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .wd-card {
+    min-width: unset;
+    width: 90%;
+    padding: 22px;
+  }
+
+  .wd-card-title {
+    font-size: 1.5rem;
+  }
+
+  .wd-gift-box {
+    width: 150px;
+    height: 150px;
+  }
+
+  .gift-body {
+    height: 100px;
+  }
 }

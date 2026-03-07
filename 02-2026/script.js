@@ -1914,12 +1914,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Dừng auto tour khi người dùng tự tương tác
   ["wheel", "touchstart"].forEach((evt) => {
-    window.addEventListener(evt, () => {
-      if (autoTourActive) stopAutoTour();
-    }, { passive: true });
+    window.addEventListener(
+      evt,
+      () => {
+        if (autoTourActive) stopAutoTour();
+      },
+      { passive: true },
+    );
   });
   document.addEventListener("keydown", (e) => {
-    if (["ArrowLeft", "ArrowRight", " ", "PageDown", "PageUp"].includes(e.key)) {
+    if (
+      ["ArrowLeft", "ArrowRight", " ", "PageDown", "PageUp"].includes(e.key)
+    ) {
       if (autoTourActive) stopAutoTour();
     }
   });
@@ -2000,7 +2006,8 @@ document.addEventListener("DOMContentLoaded", () => {
           );
         }
         setTimeout(() => {
-          if (voiceEnabled) showVoiceStatus("🎙️ Đang nghe... hãy nói gì đó nhé");
+          if (voiceEnabled)
+            showVoiceStatus("🎙️ Đang nghe... hãy nói gì đó nhé");
           else hideVoiceStatus();
         }, 2000);
       }
@@ -2089,15 +2096,15 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     requestAnimationFrame(updateVisualizer);
   }
-    if (musicToggleBtn) {
-      musicToggleBtn.style.setProperty("--viz-intensity", "0");
-      musicToggleBtn.addEventListener("click", () => {
-        setTimeout(() => {
-          if (musicPlaying) initVisualizer();
-          updateVisualizer();
-        }, 100);
-      });
-    }
+  if (musicToggleBtn) {
+    musicToggleBtn.style.setProperty("--viz-intensity", "0");
+    musicToggleBtn.addEventListener("click", () => {
+      setTimeout(() => {
+        if (musicPlaying) initVisualizer();
+        updateVisualizer();
+      }, 100);
+    });
+  }
   if (
     typeof document.documentElement.style.setProperty(
       "--viz-intensity",
@@ -2166,7 +2173,74 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // ===== EVENT MENU BAR (vertical, toggle) =====
+  const eventMenu = document.getElementById("eventMenu");
+  const eventMenuToggle = document.getElementById("eventMenuToggle");
+  if (eventMenu && eventMenuToggle) {
+    eventMenuToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const open = eventMenu.classList.toggle("open");
+      eventMenuToggle.setAttribute("aria-expanded", open);
+      eventMenu.setAttribute("aria-hidden", !open);
+    });
+    // Đóng menu khi click ra ngoài
+    document.addEventListener("click", (e) => {
+      if (
+        eventMenu.classList.contains("open") &&
+        !eventMenu.contains(e.target) &&
+        !eventMenuToggle.contains(e.target)
+      ) {
+        eventMenu.classList.remove("open");
+        eventMenuToggle.setAttribute("aria-expanded", "false");
+        eventMenu.setAttribute("aria-hidden", "true");
+      }
+    });
+    // Đóng menu khi click vào item (scroll hoặc chuyển trang)
+    eventMenu.addEventListener("click", (e) => {
+      if (e.target.closest(".event-menu-item")) {
+        eventMenu.classList.remove("open");
+        eventMenuToggle.setAttribute("aria-expanded", "false");
+        eventMenu.setAttribute("aria-hidden", "true");
+      }
+    });
+  }
+
+  // em-current items scroll within this page; href items navigate to other pages
+  document.querySelectorAll(".event-menu-item.em-current").forEach((item) => {
+    item.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const targetId = item.getAttribute("data-target");
+      const target = document.getElementById(targetId);
+      if (target) target.scrollIntoView({ behavior: "smooth" });
+    });
+  });
+
+  // Highlight active event menu item on scroll
+  const emCurrentItems = document.querySelectorAll(
+    ".event-menu-item.em-current",
+  );
+  const eventSections = ["valentine", "giaoThua", "birthday"];
+  const eventMenuObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          emCurrentItems.forEach((item) => {
+            item.classList.toggle(
+              "active",
+              item.getAttribute("data-target") === entry.target.id,
+            );
+          });
+        }
+      });
+    },
+    { threshold: 0.3 },
+  );
+  eventSections.forEach((id) => {
+    const el = document.getElementById(id);
+    if (el) eventMenuObserver.observe(el);
+  });
+
   console.log("💕 Made with love for Trần Kim Ngân 💕");
-  console.log("Valentine 14/2 • Giao Thừa 16/2 • Sinh nhật 19/2");
+  console.log("Valentine 14/2 • Giao Thừa 16/2 • Sinh nhật 19/2 • Ngày 8/3");
   console.log("🎡 Three.js 3D Heart | 📸 Photo Booth | 🖼️ Images");
 });

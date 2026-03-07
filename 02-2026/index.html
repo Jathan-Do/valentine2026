@@ -12,7 +12,7 @@
   <link
     href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&family=Quicksand:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap"
     rel="stylesheet" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="/02-2026/style.css" />
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 
 </head>
@@ -42,6 +42,33 @@
   <!-- Voice status -->
   <div id="voiceStatus" class="voice-status" aria-live="polite"></div>
 
+  <!-- Menu Toggle (ẩn/hiện menu, ngay dưới micro) -->
+  <button id="eventMenuToggle" class="event-menu-toggle" aria-label="Mở/đóng menu" aria-expanded="false">
+    <span class="event-menu-toggle-icon">☰</span>
+  </button>
+
+  <!-- ==================== EVENT MENU BAR (dọc, ẩn/hiện) ==================== -->
+  <nav class="event-menu event-menu-vertical" id="eventMenu" aria-hidden="true">
+    <span class="event-menu-group">Tháng 2/2026</span>
+    <a class="event-menu-item em-current" data-target="valentine">
+      <span class="event-menu-icon">💝</span>
+      <span class="event-menu-label">14/02 · Valentine</span>
+    </a>
+    <a class="event-menu-item em-current" data-target="giaoThua">
+      <span class="event-menu-icon">🏮</span>
+      <span class="event-menu-label">16/02 · Giao Thừa</span>
+    </a>
+    <a class="event-menu-item em-current" data-target="birthday">
+      <span class="event-menu-icon">🎂</span>
+      <span class="event-menu-label">19/02 · Sinh nhật</span>
+    </a>
+    <span class="event-menu-group">Tháng 3/2026</span>
+    <a class="event-menu-item wd-highlight" href="/03-2026/womens-day.html">
+      <span class="event-menu-icon">🌸</span>
+      <span class="event-menu-label">08/03 · 8/3</span>
+    </a>
+  </nav>
+
   <!-- ==================== SECTION 1: INTRO with 3D HEART ==================== -->
   <section id="intro" class="section intro-section active">
     <div class="intro-content">
@@ -53,7 +80,7 @@
         <span class="title-line accent" data-delay="200">Ngân yêu</span>
         <span class="title-line small" data-delay="400">💕 pé · M ilk · Boo 💕</span>
       </h1>
-      <p class="intro-subtitle">Ba dịp đặc biệt — Một tình yêu duy nhất</p>
+      <p class="intro-subtitle">Những dịp đặc biệt — Một tình yêu duy nhất</p>
       <button id="enterBtn" class="enter-btn">
         <span class="btn-text">💕 Mở trái tim đón nhận tình yêu to bự này của anh đii 💕</span>
         <span class="btn-glow"></span>
@@ -690,6 +717,7 @@
         <span>💝 Valentine 14/2</span>
         <span>🏮 Giao Thừa 16/2</span>
         <span>🎂 Sinh nhật 19/2</span>
+        <span>🌸 Ngày 8/3</span>
       </div>
     </div>
   </section>
@@ -736,7 +764,7 @@
   </nav>
   <!-- Three.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="script.js"></script>
+  <script src="/02-2026/script.js"></script>
   <!-- MediaPipe Hands (gesture capture for PhotoBooth) -->
   <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js"></script>
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
