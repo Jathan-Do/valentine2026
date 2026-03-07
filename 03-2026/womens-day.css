@@ -376,6 +376,7 @@
   height: 100%;
   cursor: crosshair;
   border-radius: 14px;
+  touch-action: none;
 }
 
 /* ===== BLOOM ROSE ===== */

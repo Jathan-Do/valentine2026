@@ -543,10 +543,16 @@ document.addEventListener("DOMContentLoaded", () => {
   const scratchCard = document.getElementById("scratchCard");
   if (scratchCanvas && scratchCard) {
     const ctx = scratchCanvas.getContext("2d");
+    let hasScratched = false;
+
     function resizeScratch() {
       const rect = scratchCard.getBoundingClientRect();
       scratchCanvas.width = rect.width;
       scratchCanvas.height = rect.height;
+      if (hasScratched) {
+        ctx.globalCompositeOperation = "destination-out";
+        return;
+      }
       ctx.fillStyle = "#4b164c";
       ctx.fillRect(0, 0, scratchCanvas.width, scratchCanvas.height);
       ctx.fillStyle = "#f9a8d4";
@@ -573,8 +579,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const x = clientX - rect.left;
       const y = clientY - rect.top;
       ctx.beginPath();
-      ctx.arc(x, y, 22, 0, Math.PI * 2);
+      ctx.arc(x, y, 24, 0, Math.PI * 2);
       ctx.fill();
+      hasScratched = true;
     }
 
     scratchCanvas.addEventListener("mousedown", (e) => {
@@ -596,12 +603,14 @@ document.addEventListener("DOMContentLoaded", () => {
     scratchCanvas.addEventListener(
       "touchmove",
       (e) => {
+        if (scratching && e.cancelable) e.preventDefault();
         scratch(e);
       },
-      { passive: true },
+      { passive: false },
     );
 
     function autoScratch() {
+      hasScratched = true;
       const w = scratchCanvas.width;
       const h = scratchCanvas.height;
       const radius = 28;
