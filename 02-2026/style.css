@@ -2756,12 +2756,6 @@ body {
 }
 
 @media (max-width: 600px) {
-  .event-menu-toggle {
-    top: 130px;
-    right: 16px;
-    width: 46px;
-    height: 46px;
-  }
   .event-menu {
     top: 184px;
     right: 16px;
