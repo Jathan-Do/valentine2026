@@ -2672,6 +2672,7 @@ body {
   padding: 6px 10px;
   font-size: 0.75rem;
   border-radius: 8px;
+  text-align: center;
 }
 .event-menu.event-menu-vertical .event-menu-group:first-child {
   margin-top: 0;

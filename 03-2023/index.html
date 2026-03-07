@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/images/668652.png" />
+    <link rel="stylesheet" href="/03-2023/index.css" />
+    <link rel="stylesheet" href="/02-2026/style.css" />
+    <title>nini.수니</title>
+  </head>
+
+  <body>
+    <nav
+      class="event-menu event-menu-vertical"
+      id="eventMenu"
+      aria-hidden="true"
+    >
+      <span class="event-menu-group">Tháng 3/2023</span>
+      <a class="event-menu-item em-current active" href="/03-2023/index.html">
+        <span class="event-menu-icon">💝</span>
+        <span class="event-menu-label">08/03 · Ngày của Em</span>
+      </a>
+      <span class="event-menu-group">Tháng 2/2026</span>
+      <a class="event-menu-item" href="/02-2026/index.html#valentine">
+        <span class="event-menu-icon">💝</span>
+        <span class="event-menu-label">14/02 · Valentine</span>
+      </a>
+      <a class="event-menu-item" href="/02-2026/index.html#giaoThua">
+        <span class="event-menu-icon">🏮</span>
+        <span class="event-menu-label">16/02 · Giao Thừa</span>
+      </a>
+      <a class="event-menu-item" href="/02-2026/index.html#birthday">
+        <span class="event-menu-icon">🎂</span>
+        <span class="event-menu-label">19/02 · Sinh nhật</span>
+      </a>
+	  <span class="event-menu-group">Tháng 3/2026</span>
+	  <a class="event-menu-item wd-highlight" href="/03-2026/womens-day.html">
+		<span class="event-menu-icon">🌸</span>
+		<span class="event-menu-label">08/03 · 8/3</span>
+	  </a>
+    </nav>
+    <button
+      id="eventMenuToggle"
+      class="event-menu-toggle"
+      aria-label="Mở/đóng menu"
+      aria-expanded="false"
+    >
+      <span class="event-menu-toggle-icon">☰</span>
+    </button>
+    <div class="stage">
+      <svg
+        fill="#ee5858 "
+        id="heart"
+        width="400"
+        height="400"
+        viewBox="0 0 1200 1200"
+      >
+        <path
+          d="M1176.629 250.347c54.502 168.401 8.89 339.761-87.232 468.872-63.446 87.553-139.273 163.012-216.796 228.983-71.322 66.39-230.933 197.753-273.241 201.402-37.394-7.148-79.353-49.433-109.039-71.196C323.503 951.599 143.93 797.388 52.878 628.779c-76.34-161.871-76.48-362.086 42.333-486.189C249.271 3.702 481.533 30.841 599.359 175.944c31.644-41.05 70.556-73.335 116.737-96.853 187.213-74.728 381.972 1.418 460.533 171.256z"
+        />
+      </svg>
+      <h2 id="congrat">&#10084;</h2>
+      <style type="text/css">
+        body {
+          text-align: center;
+          word-wrap: break-word;
+          color: wheat;
+          background: #2d1f2a;
+          /* font-family: cursive; */
+        }
+        #heart {
+          -webkit-animation: knock 750ms linear infinite;
+        }
+        @-webkit-keyframes knock {
+          0% {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 50px;
+            margin-top: 50px;
+          }
+          25% {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 25px;
+            margin-top: 25px;
+          }
+          100% {
+            width: 250px;
+            height: 250px;
+            margin-bottom: 0px;
+            margin-top: 0px;
+          }
+        }
+      </style>
+      <script type="text/javascript">
+        var congrattext =
+          " Happy Women's Day - sooniizz ! Shine on....Not just today but everyday !";
+        var pos = 0;
+        function Congratulations() {
+          var intv = setTimeout("Congratulations()", 75);
+          if (pos != congrattext.length) {
+            congrat.innerHTML += congrattext[pos];
+            pos++;
+          } else {
+            clearInterval(intv);
+          }
+        }
+        setTimeout("Congratulations()", 500);
+      </script>
+      <div class="ground-line">
+        <div>
+          <span class="line1"></span>
+          <span class="line2"></span>
+          <span class="line3"></span>
+          <span class="line1"></span>
+          <span class="line2"></span>
+          <span class="line3"></span>
+        </div>
+      </div>
+      <div class="tree-wrap">
+        <div class="tree">
+          <div class="stem">
+            <div class="branch branch1"></div>
+            <div class="branch branch2"></div>
+            <div class="branch branch3"></div>
+          </div>
+          <div class="leef leef1"></div>
+          <div class="leef leef2"></div>
+        </div>
+      </div>
+      <div class="love-front">
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+      </div>
+      <div class="love-back">
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+        <div class="love-wrap">
+          <div class="love">
+            <span class="circle circle1"></span>
+            <span class="circle circle2"></span>
+            <span class="square"></span>
+          </div>
+        </div>
+      </div>
+      <h1
+        style="
+          position: absolute;
+          top: 75%;
+          left: 18%;
+          font-size: 6rem;
+          color: #d66b6b;
+        "
+      >
+        사 랑 해 요
+      </h1>
+      <div class="vehicle-body">
+        <div class="wrap-body">
+          <div class="rooftop back"></div>
+          <div class="rooftop front"></div>
+          <div class="body-cover">
+            <div class="top-roof"></div>
+            <div class="indi back-top-indicator"></div>
+            <div class="indi back-bottom-indicator"></div>
+            <div class="back-window">
+              <div class="window-base top"></div>
+              <div class="window-base bottom"></div>
+              <div class="sun-shade"></div>
+              <div class="curtain">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="windows-glass-wrap">
+                <div class="glass">
+                  <div class="light">
+                    <span class="light1"></span>
+                    <span class="light2"></span>
+                    <span class="light3"></span>
+                  </div>
+                </div>
+                <div class="glass">
+                  <div class="light">
+                    <span class="light1"></span>
+                    <span class="light2"></span>
+                    <span class="light3"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="front-window">
+              <div class="window-base"></div>
+              <div class="sun-shade"></div>
+              <div class="curtain">
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+              <div class="windows-glass-wrap">
+                <div class="light">
+                  <span class="light1"></span>
+                  <span class="light2"></span>
+                  <span class="light3"></span>
+                </div>
+              </div>
+              <div class="air-hole">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+          <div class="main-door">
+            <div class="glass">
+              <div class="light">
+                <span class="light1"></span>
+                <span class="light2"></span>
+              </div>
+            </div>
+            <div class="door-handle"></div>
+          </div>
+          <div class="side-guard">
+            <div class="shade"></div>
+            <div class="bumper back"></div>
+            <div class="bumper front"></div>
+            <div class="front-indicator"></div>
+          </div>
+        </div>
+        <div class="wheel-wrap back">
+          <div class="wheel-shadow"></div>
+          <div class="wheel">
+            <div class="wheel-outer">
+              <div class="wheel-cup">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="wheel-wrap front">
+          <div class="wheel-shadow"></div>
+          <div class="wheel">
+            <div class="wheel-outer">
+              <div class="wheel-cup">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    // ===== EVENT MENU (vertical, toggle) =====
+    const eventMenu = document.getElementById("eventMenu");
+    const eventMenuToggle = document.getElementById("eventMenuToggle");
+    if (eventMenu && eventMenuToggle) {
+      eventMenuToggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        const open = eventMenu.classList.toggle("open");
+        eventMenuToggle.setAttribute("aria-expanded", open);
+        eventMenu.setAttribute("aria-hidden", !open);
+      });
+      document.addEventListener("click", (e) => {
+        if (
+          eventMenu.classList.contains("open") &&
+          !eventMenu.contains(e.target) &&
+          !eventMenuToggle.contains(e.target)
+        ) {
+          eventMenu.classList.remove("open");
+          eventMenuToggle.setAttribute("aria-expanded", "false");
+          eventMenu.setAttribute("aria-hidden", "true");
+        }
+      });
+      eventMenu.addEventListener("click", () => {
+        eventMenu.classList.remove("open");
+        eventMenuToggle.setAttribute("aria-expanded", "false");
+        eventMenu.setAttribute("aria-hidden", "true");
+      });
+    }
+  </script>
+</html>
