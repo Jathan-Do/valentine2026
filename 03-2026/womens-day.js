@@ -405,6 +405,9 @@ document.addEventListener("DOMContentLoaded", () => {
       } else if (/mở thiệp|thiệp/.test(text)) {
         handled = true;
         wdCardFlip?.click();
+      } else if (/cào thẻ|cào the|cao the|scratch/.test(text)) {
+        handled = true;
+        document.getElementById("scratchSection")?.scrollIntoView({ behavior: "smooth" });
       } else if (/tiếp|xuống|next/.test(text)) {
         handled = true;
         goToWdSection("next");
