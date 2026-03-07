@@ -2607,8 +2607,8 @@ body {
    ============================================================= */
 .event-menu-toggle {
   position: fixed;
-  top: 140px;
-  right: 20px;
+  top: 20px;
+  left: 20px;
   z-index: 1001;
   width: 50px;
   height: 50px;
@@ -2639,8 +2639,8 @@ body {
 
 .event-menu {
   position: fixed;
-  top: 198px;
-  right: 20px;
+  top: 80px;
+  left: 20px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -2757,8 +2757,8 @@ body {
 
 @media (max-width: 600px) {
   .event-menu {
-    top: 184px;
-    right: 16px;
+    top: 80px;
+    left: 16px;
     min-width: 180px;
     padding: 10px 8px;
   }
