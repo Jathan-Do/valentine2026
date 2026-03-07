@@ -614,15 +614,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // ===== TYPEWRITER MESSAGE =====
+  // ===== TYPEWRITER MESSAGE (chạy khi lướt tới section) =====
   const typewriterText = document.getElementById("typewriterText");
   const twCursor = document.getElementById("twCursor");
-  if (typewriterText && twCursor) {
+  const typewriterSection = document.getElementById("typewriterSection");
+  if (typewriterText && twCursor && typewriterSection) {
     const message =
       "Nhân ngày 8/3, anh chỉ muốn nói rằng:\n" +
       "Cảm ơn em vì đã luôn dịu dàng, cố gắng và yêu thương anh.\n" +
       "Dù tương lai có ra sao, anh vẫn mong người anh nắm tay đi tiếp… là em.";
-    let i = 0;
+    let started = false;
     function typeNext() {
       if (i >= message.length) return;
       const ch = message[i];
@@ -631,7 +632,20 @@ document.addEventListener("DOMContentLoaded", () => {
       const delay = ch === "." || ch === "?" || ch === "!" ? 180 : 45;
       setTimeout(typeNext, delay);
     }
-    setTimeout(typeNext, 800);
+    let i = 0;
+    const twObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !started) {
+            started = true;
+            twObserver.disconnect();
+            typeNext();
+          }
+        });
+      },
+      { threshold: 0.3 },
+    );
+    twObserver.observe(typewriterSection);
   }
 
   // ===== GREETING CARD FLIP =====
